@@ -1,17 +1,18 @@
-import { useState } from 'react'
-import './App.css'
+import { useState } from "react";
+import "./App.css";
+import { Route, Routes } from "react-router-dom";
+import Home from "./Pages/Home";
 
 function App() {
-
   return (
     <>
-    <h1 className='text-4xl font-bold text-caribbeangreen-600 font-inter'>
-      Hello Rohit
-    </h1>
+      <div className="border border-red-500 w-screen min-h-screen bg-richblack-900 font-inter">
+        <Routes>
+          <Route path="/" element={<Home />} />
+        </Routes>
+      </div>
     </>
-  )
+  );
 }
 
 export default App;
-
-

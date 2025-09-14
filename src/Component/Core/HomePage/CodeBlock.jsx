@@ -34,7 +34,7 @@ const CodeBlock = ({
         </section>
         {/* section 2 */}
         <section className="flex text-10[px] w-[100%] py-4 lg:w-[500px]">
-          <div>
+          <div className="w-[10%] text-center flex flex-col text-richblack-400 font-inter font-bold">
             <p>1</p>
             <p>2</p>
             <p>3</p>
@@ -48,7 +48,7 @@ const CodeBlock = ({
             <p>11</p>
           </div>
 
-          <div>
+          <div className={`w-[90%] flex flex-col gap-2 font-bold font-mono ${codeColor} pr-2`}>
             <div>
               <TypeAnimation
                 sequence={[codeBlock, 2000, ""]}

@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import HighLightText from "../Component/Core/HomePage/HighLightText";
 import CTAbutton from "../Component/Core/HomePage/Button";
 import Banner from "../assets/Images/banner.mp4";
+import CodeBlock from "../Component/Core/HomePage/CodeBlock";
 const Home = () => {
   return (
     <>
@@ -50,9 +51,32 @@ const Home = () => {
 
         {/* codeblock */}
         <div>
-            <CodeBlock 
+          <CodeBlock
+            position={"lg:flex-row"}
+            heading={
+              <div>
+                Unlock Your
+                <HighLightText text={"coding potential"} />
+                with our online courses
+              </div>
+            }
+            subHeading={
+              "Our courses are designed and taught by industry experts who have years of experience in coding and are passionate about sharing their knowledge with you."
+            }
+            ctaBtn1={{
+              btnText: "Try it yourself",
+              linkto: "/signup",
+              active: true,
+            }}
+            ctaBtn2={{
+              btnText: "learn more",
+              linkto: "/login",
+              active: false,
+            }}
+            codeBlock={`<!DOCTYPE html>\n<html>\n head><title>Example</\n title><linkrel="stylesheet"href="styles.css">\n/head>\nbody>\nh1><ahref="/">Header</a>\n/h1>\n nav><ahref="one/">One</a><ahref="two/">Two<\n /a><ahref="three/">Three</a>\n/nav>`}
+            codeColor={"text-yellow-25"}
+          />
         </div>
-
       </section>
     </>
   );

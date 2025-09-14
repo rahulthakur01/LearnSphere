@@ -9,7 +9,7 @@ import CodeBlock from "../Component/Core/HomePage/CodeBlock";
 const Home = () => {
   return (
     <>
-      <section className="flex flex-col justify-between mx-auto w-11/12 items-center text-white">
+      <section className="flex flex-col justify-between mx-auto w-11/12 max-w-[1260px] items-center text-white">
         <Link to={"/signup"}>
           <div className="bg-richblack-800 text-bold text-richblack-200 mx-auto mt-16 p-1 transition-all duration-200 rounded-full hover:scale-95 w-fit">
             <div className="flex gap-2 items-center  rounded-full px-10 py-[5px]">
@@ -54,7 +54,7 @@ const Home = () => {
           <CodeBlock
             position={"lg:flex-row"}
             heading={
-              <div>
+              <div className='text-4xl font-semibold'>
                 Unlock Your
                 <HighLightText text={"coding potential"} />
                 with our online courses

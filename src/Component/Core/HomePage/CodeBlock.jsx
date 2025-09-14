@@ -1,5 +1,8 @@
 import React from "react";
 import CTAbutton from "../HomePage/Button";
+import { TypeAnimation } from "react-type-animation";
+import { FaArrowRight } from "react-icons/fa6";
+
 const CodeBlock = ({
   position,
   heading,
@@ -11,14 +14,17 @@ const CodeBlock = ({
 }) => {
   return (
     <>
-      <main>
+      <main className={`flex ${position} my-20 justify-between gap-10 `}>
         {/* section 1 */}
-        <section>
+        <section className="w-[50%] flex flex-col gap-8">
           <div>{heading}</div>
-          <div>{subHeading}</div>
-          <div>
+          <div className="text-richblack-300 font-bold">{subHeading}</div>
+          <div className="flex gap-7 mt-7">
             <CTAbutton active={ctaBtn1.active} linkto={ctaBtn1.linkto}>
-              try it yourself
+              <div className="flex gap-2 items-center">
+                {ctaBtn1.btnText}
+                <FaArrowRight />
+              </div>
             </CTAbutton>
 
             <CTAbutton active={ctaBtn2.active} linkto={ctaBtn2.linkto}>
@@ -27,7 +33,7 @@ const CodeBlock = ({
           </div>
         </section>
         {/* section 2 */}
-        <section>
+        <section className="flex text-10[px] w-[100%] py-4 lg:w-[500px]">
           <div>
             <p>1</p>
             <p>2</p>
@@ -43,7 +49,18 @@ const CodeBlock = ({
           </div>
 
           <div>
-            
+            <div>
+              <TypeAnimation
+                sequence={[codeBlock, 2000, ""]}
+                repeat={Infinity}
+                cursor={true}
+                style={{
+                  whiteSpace: "pre-line",
+                  display: "block",
+                }}
+                omitDeletionAnimation={true}
+              />
+            </div>
           </div>
         </section>
       </main>

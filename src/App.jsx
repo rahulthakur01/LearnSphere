@@ -6,7 +6,7 @@ import Home from "./Pages/Home";
 function App() {
   return (
     <>
-      <div className="border border-red-500 w-screen min-h-screen bg-richblack-900 font-inter">
+      <div className=" w-screen min-h-screen bg-richblack-900 font-inter">
         <Routes>
           <Route path="/" element={<Home />} />
         </Routes>

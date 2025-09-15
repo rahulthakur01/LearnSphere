@@ -6,9 +6,11 @@ import HighLightText from "../Component/Core/HomePage/HighLightText";
 import CTAbutton from "../Component/Core/HomePage/Button";
 import Banner from "../assets/Images/banner.mp4";
 import CodeBlock from "../Component/Core/HomePage/CodeBlock";
+import TimeLineSection from "../Component/Core/HomePage/TimeLineSection";
 const Home = () => {
   return (
     <>
+      {/* section 1 */}
       <section className="flex flex-col justify-between mx-auto w-11/12 max-w-[1260px] items-center text-white">
         <Link to={"/signup"}>
           <div className="bg-richblack-800 text-bold text-richblack-200 mx-auto mt-16 p-1 transition-all duration-200 rounded-full hover:scale-95 w-fit">
@@ -49,12 +51,12 @@ const Home = () => {
           </div>
         </div>
 
-        {/* codeblock */}
+        {/* codeblock 1*/}
         <div>
           <CodeBlock
             position={"lg:flex-row"}
             heading={
-              <div className='text-4xl font-semibold'>
+              <div className="text-4xl font-semibold">
                 Unlock Your
                 <HighLightText text={"coding potential"} />
                 with our online courses
@@ -76,6 +78,80 @@ const Home = () => {
             codeBlock={`<!DOCTYPE html>\n<html>\n head><title>Example</\n title><linkrel="stylesheet"href="styles.css">\n/head>\nbody>\nh1><ahref="/">Header</a>\n/h1>\n nav><ahref="one/">One</a><ahref="two/">Two<\n /a><ahref="three/">Three</a>\n/nav>`}
             codeColor={"text-yellow-25"}
           />
+        </div>
+        {/* codeblock 2 */}
+        <div>
+          <CodeBlock
+            position={"lg:flex-row-reverse"}
+            heading={
+              <div className="text-4xl font-semibold">
+                Start
+                <HighLightText text={"coding in seconds"} />
+              </div>
+            }
+            subHeading={
+              "Go ahead, give it a try. Our hands-on learning environment means you'll be writing real code from your very first lesson."
+            }
+            ctaBtn1={{
+              btnText: "Continue Lession",
+              linkto: "/signup",
+              active: true,
+            }}
+            ctaBtn2={{
+              btnText: "learn more",
+              linkto: "/login",
+              active: false,
+            }}
+            codeBlock={`<!DOCTYPE html>\n<html>\nhead><title>Example</\ntitle><linkrel="stylesheet"href="styles.css">\n/head>\nbody>\nh1><ahref="/">Header</a>\n/h1>\nnav><ahref="one/">One</a><ahref="two/">Two</\na><ahref="three/">Three</a>\n/nav>`}
+            codeColor={"text-red-400"}
+          />
+        </div>
+      </section>
+
+      {/* section 2 */}
+      <section className="bg-pure-greys-5 text-richblack-700">
+        <div className="homepage_bg h-[310px]">
+          <div className=" flex flex-col items-center justify-between w-11/12 max-w-[1260px] mx-auto">
+            <div className="h-[150px]"></div>
+            <div className="flex gap-7 text-white">
+              <CTAbutton active={true} linkto={"/signup"}>
+                <div className="flex gap-2 items-center">
+                  <p> Explore Full Catalog</p>
+                  <FaArrowRight />
+                </div>
+              </CTAbutton>
+
+              <CTAbutton active={false} linkto={"/login"}>
+                <div>Learn more</div>
+              </CTAbutton>
+            </div>
+          </div>
+        </div>
+
+        <div className="w-11/12 max-w-[1260px] flex flex-col items-center justify-between mx-auto gap-7 ">
+          <div className="flex flex-row gap-5 mb-10 mt-[95px]">
+            <div className="text-4xl font-semibold w-[45%] ">
+              Get the Skills you need for a
+              <HighLightText text={"Job that is in demand"} />
+            </div>
+
+            <div className="flex flex-col gap-10 items-start w-[40%]">
+              <div className="text-[16px]">
+                The modern StudyNotion is the dictates its own terms. Today, to
+                be a competitive specialist requires more than professional
+                skills.
+              </div>
+              <CTAbutton active={true} linkto={"/login"}>
+                <div className="flex gap-2 items-center">
+                  <p>Become an Instructor</p>
+                  <FaArrowRight />
+                </div>
+              </CTAbutton>
+            </div>
+          </div>
+         
+          <TimeLineSection />
+
         </div>
       </section>
     </>

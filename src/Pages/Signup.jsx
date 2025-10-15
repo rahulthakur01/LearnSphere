@@ -1,5 +1,6 @@
 import React from "react";
 import signupImage from "../assets/Images/signup.webp"
+import Template from "../Component/Core/HomePage/Auth/Template";
 const Signup = () => {
   return (
     <>

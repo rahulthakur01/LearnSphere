@@ -2,8 +2,8 @@ import React from "react";
 import LoginForm from "./LoginForm";
 import SignupForm from "./SignupForm";
 import { useSelector } from "react-redux";
-
-const Template = ({ title, description1, description2, formType }) => {
+import frameImg from "../../../../assets/Images/frame.png"
+const Template = ({ title, description1, description2, formType, signupImg}) => {
   const loading = useSelector((state) => state.loading);
 
   return (
@@ -12,7 +12,7 @@ const Template = ({ title, description1, description2, formType }) => {
         {loading ? (
           <div className="spinner">loading...</div>
         ) : (
-          <div>
+          <div className="mx-auto flex w-11/12 max-w-maxContent flex-col-reverse justify-between gap-y-12 py-12 md:flex-row md:gap-y-0 md:gap-x-12">
             {/* left */}
             <div>
               <h1 className="text-[1.875rem] font-semibold leading-[2.375rem] text-richblack-5">
@@ -24,7 +24,7 @@ const Template = ({ title, description1, description2, formType }) => {
                   {description2}
                 </span>
               </p>
-              {formType === "singup" ? <SignupForm /> : <LoginForm />}
+              {formType === "signup" ? <SignupForm /> : <LoginForm />}
             </div>
             {/* right */}
             <div className="relative mx-auto w-11/12 max-w-[450px] md:mx-0">
@@ -36,7 +36,7 @@ const Template = ({ title, description1, description2, formType }) => {
                 loading="lazy"
               />
               <img
-                src={image}
+                src={signupImg}
                 alt="Students"
                 width={558}
                 height={504}

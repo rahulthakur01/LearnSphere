@@ -3,6 +3,9 @@ import "./App.css";
 import { Route, Routes } from "react-router-dom";
 import Home from "./Pages/Home";
 import Navbar from "./Component/Common/Navbar";
+import Login from "./Pages/Login"
+import Signup from "./Pages/Signup";
+import OpenRoute from "./Component/Core/HomePage/Auth/OpenRoute";
 function App() {
   return (
     <>
@@ -10,7 +13,16 @@ function App() {
         <Navbar/>
         <Routes>
           <Route path="/" element={<Home />} />
-          
+          <Route path="signup" element={
+            <OpenRoute>
+              <Signup/>
+            </OpenRoute>
+          }/>
+            <Route path="login" element={
+            <OpenRoute>
+              <Login/>
+            </OpenRoute>
+          }/>
         </Routes>
       </div>
     </>

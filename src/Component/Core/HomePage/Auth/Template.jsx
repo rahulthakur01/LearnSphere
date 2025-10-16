@@ -12,9 +12,9 @@ const Template = ({ title, description1, description2, formType, signupImg}) => 
         {loading ? (
           <div className="spinner">loading...</div>
         ) : (
-          <div className="mx-auto flex w-11/12 max-w-maxContent flex-col-reverse justify-between gap-y-12 py-12 md:flex-row md:gap-y-0 md:gap-x-12">
+          <div className="mx-auto  flex w-11/12 max-w-[1260px] flex-col-reverse items-center justify-between gap-y-12 py-12 md:flex-row md:gap-y-0 md:gap-x-12">
             {/* left */}
-            <div>
+            <div className="w-[50%] max-w-[500px] ">
               <h1 className="text-[1.875rem] font-semibold leading-[2.375rem] text-richblack-5">
                 {title}
               </h1>

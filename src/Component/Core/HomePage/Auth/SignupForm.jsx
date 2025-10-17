@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import toast from "react-hot-toast";
 import { FaEye } from "react-icons/fa6";
 import { FaEyeSlash } from "react-icons/fa6";
 import { useDispatch } from "react-redux";
@@ -19,12 +20,14 @@ const SignupForm = () => {
     password: "",
     confirmPassword: "",
   });
-  const { firstName, lastName, email, passowrd, confirmPassword } = formData;
+  const { firstName, lastName, email, password, confirmPassword } = formData;
+
+  console.log("formData", formData);
 
   const handleOnChange = (e) => {
     setFormData((prevData) => ({
       ...prevData,
-      [e.target.name]: [e.target.value],
+      [e.target.name]: e.target.value,
     }));
   };
 
@@ -32,7 +35,7 @@ const SignupForm = () => {
   const handleOnSubmit = (e) => {
     e.preventDefault();
 
-    if (passowrd !== confirmPassword) {
+    if (password !== confirmPassword) {
       return toast.error("Passwords Do Not Match");
     }
 
@@ -41,15 +44,18 @@ const SignupForm = () => {
       accountType,
     };
 
+    console.log("signupData", signupData);
+
     dispatch(setSignUpData(signupData));
     dispatch(sendOtp(formData.email, navigate));
-    setFormData = {
+
+    setFormData ({
       firstName: "",
       lastName: "",
       email: "",
       password: "",
       confirmPassword: "",
-    };
+    });
     setAccountType(ACCOUNT_TYPE.STUDENT);
   };
 
@@ -81,7 +87,7 @@ const SignupForm = () => {
                 required
                 type="text"
                 name="firstName"
-                // value={firstName}
+                value={firstName}
                 onChange={handleOnChange}
                 placeholder="Enter first name"
                 style={{
@@ -98,7 +104,7 @@ const SignupForm = () => {
                 required
                 type="text"
                 name="lastName"
-                // value={firstName}
+                value={lastName}
                 onChange={handleOnChange}
                 placeholder="Enter last name"
                 style={{
@@ -110,14 +116,15 @@ const SignupForm = () => {
           </div>
           <label>
             <p className="mb-1 text-[0.875rem] leading-[1.375rem] text-richblack-5">
-            Email <sup className="text-pink-200">*</sup>
+              Email <sup className="text-pink-200">*</sup>
             </p>
             <input
               type="text"
               name="email"
               placeholder="Enter your email"
-              // value={email}
+              value={email}
               required
+              onChange={handleOnChange}
               className="w-full rounded-[0.5rem] bg-richblack-800 p-[12px] text-richblack-5"
             />
           </label>
@@ -127,11 +134,12 @@ const SignupForm = () => {
                 Create Password <sup className="text-pink-200">*</sup>
               </p>
               <input
-                type="text"
+                type={showPassword ? "text": "password"}
                 name="password"
-                // value={password}
+                value={password}
                 placeholder="Enter your password"
                 required
+                onChange={handleOnChange}
                 className="w-full rounded-[0.5rem] bg-richblack-800 p-[12px] text-richblack-5"
               />
               <span
@@ -150,11 +158,12 @@ const SignupForm = () => {
                 Confirm Password <sup className="text-pink-200">*</sup>
               </p>
               <input
-                type="text"
+                type={showConfirmPassword ? "text" : "password"}
                 name="confirmPassword"
-                // value={confirmPassword}
+                value={confirmPassword}
                 placeholder="Confirm password"
                 required
+                onChange={handleOnChange}
                 className="w-full rounded-[0.5rem] bg-richblack-800 p-[12px] text-richblack-5"
               />
               <span
@@ -170,7 +179,7 @@ const SignupForm = () => {
             </label>
           </div>
 
-          <button className="font-medium mt-6 px-6 py-2 bg-yellow-50 rounded-[8px] text-richblack-900 cursor-pointer">
+          <button className="font-medium mt-6 px-6 py-2 bg-yellow-50 rounded-[8px] text-richblack-900 cursor-pointer" type="submit">
             create account
           </button>
         </form>

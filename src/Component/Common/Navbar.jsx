@@ -21,7 +21,7 @@ const Navbar = () => {
             <ul className="flex gap-x-6 text-richblack-25">
               {NavbarLinks.map((link, index) => {
                 return (
-                  <li className="text-white">
+                  <li className="text-white" key={index}>
                     {link.title === "Catalog" ? (
                       <div className="flex items-center gap-2 relative group">
                         <p>{link.title}</p>

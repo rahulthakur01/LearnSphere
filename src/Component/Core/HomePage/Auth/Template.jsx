@@ -3,7 +3,8 @@ import LoginForm from "./LoginForm";
 import SignupForm from "./SignupForm";
 import { useSelector } from "react-redux";
 import frameImg from "../../../../assets/Images/frame.png"
-const Template = ({ title, description1, description2, formType, signupImg}) => {
+const Template = ({ title, description1, description2, formType, image}) => {
+  
   const loading = useSelector((state) => state.loading);
 
   return (
@@ -36,7 +37,7 @@ const Template = ({ title, description1, description2, formType, signupImg}) => 
                 loading="lazy"
               />
               <img
-                src={signupImg}
+                src={image}
                 alt="Students"
                 width={558}
                 height={504}

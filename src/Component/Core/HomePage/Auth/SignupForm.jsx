@@ -4,9 +4,13 @@ import { FaEye } from "react-icons/fa6";
 import { FaEyeSlash } from "react-icons/fa6";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+
 import { setSignUpData } from "../../../../Redux/slices/authSlice";
 import Tab from "../../../Common/Tab";
 import { ACCOUNT_TYPE } from "../../../../utils/constant";
+import { sendOtp } from "../../../../Services/oprations/authAPI";
+
+
 const SignupForm = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();

@@ -7,10 +7,12 @@ import { setLoading } from "../../Redux/slices/authSlice";
 const { SENDOTP_API } = endPoints;
 
 export const sendOtp = (email, navigate) => {
-
+  console.log("ok ok")
   return async (dispatch) => {
     const toastId = toast.loading("loading...");
     dispatch(setLoading(true))
+    console.log("ok okff")
+
     try {
       const response = await apiConnector("POST", SENDOTP_API, {
         email,

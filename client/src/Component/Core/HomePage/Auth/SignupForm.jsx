@@ -26,7 +26,7 @@ const SignupForm = () => {
   });
   const { firstName, lastName, email, password, confirmPassword } = formData;
 
-  console.log("formData", formData);
+ 
 
   const handleOnChange = (e) => {
     setFormData((prevData) => ({

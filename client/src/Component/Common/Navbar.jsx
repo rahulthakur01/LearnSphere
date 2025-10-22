@@ -3,10 +3,13 @@ import { NavbarLinks } from "../../data/navbar-links";
 import { Link, matchPath, useLocation } from "react-router-dom";
 import { FaChevronDown } from "react-icons/fa";
 
+import { useSelector } from "react-redux";
+
 const Navbar = () => {
   const location = useLocation();
+  const { token } = useSelector((state) => state.auth);
+  // const { user } = useSelector((state) => state.profile);
 
-  
   function matchRoute(route) {
     return matchPath({ path: route }, location.pathname);
   }
@@ -36,8 +39,6 @@ const Navbar = () => {
                               translate-x-[80%]
                               translate-y-[-45%] h-6 w-6 rotate-45 rounded bg-richblack-5"
                           ></div>
-
-
                         </div>
                       </div>
                     ) : (
@@ -58,7 +59,23 @@ const Navbar = () => {
               })}
             </ul>
           </nav>
-          <div>lgoi</div>
+
+          <div className="flex items-center gap-x-4">
+            {token == null && (
+              <Link to="/signup">
+                <button className="border border-richblack-700 bg-richblack-800 px-[12px] py-[8px] text-richblack-100 rounded-md">Signup</button>
+              </Link>
+            )}
+            {
+              token === null &&(
+                <Link to="/login">
+               <button className="border border-richblack-700 bg-richblack-800 px-[12px] py-[8px] text-richblack-100 rounded-md">
+                Login
+               </button>
+                </Link>
+              )
+            }
+          </div>
         </div>
       </div>
     </>

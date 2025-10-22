@@ -6,6 +6,7 @@ import Navbar from "./Component/Common/Navbar";
 import Login from "./Pages/Login"
 import Signup from "./Pages/Signup";
 import OpenRoute from "./Component/Core/HomePage/Auth/OpenRoute";
+import VerifyEmail from "./Pages/VerifyEmail";
 function App() {
   return (
     <>
@@ -21,6 +22,12 @@ function App() {
             <Route path="login" element={
             <OpenRoute>
               <Login/>
+            </OpenRoute>
+          }/>
+
+          <Route path="/verify-email" element={
+            <OpenRoute>
+              <VerifyEmail/>
             </OpenRoute>
           }/>
         </Routes>

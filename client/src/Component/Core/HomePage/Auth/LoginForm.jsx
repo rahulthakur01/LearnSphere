@@ -3,7 +3,7 @@ import { FaEye } from "react-icons/fa6";
 import { FaEyeSlash } from "react-icons/fa6";
 import { useDispatch } from "react-redux";
 import { useNavigate, useNavigationType } from "react-router-dom";
-
+import { Link } from "react-router-dom";
 const LoginForm = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -17,7 +17,7 @@ const LoginForm = () => {
   const handleOnChange = (e) => {
     setFormData((prevData) => ({
       ...prevData,
-      [e.target.name]: [e.target.value],
+      [e.target.name]: e.target.value,
     }));
   };
 
@@ -57,7 +57,7 @@ const LoginForm = () => {
             <input
               type="text"
               name="password"
-              // value={password}
+              value={password}
               placeholder="Enter password"
               required
               className="w-full rounded-[0.5rem] bg-richblack-800 p-[12px] text-richblack-5"
@@ -75,6 +75,9 @@ const LoginForm = () => {
                 <FaEye fontSize={20} fill="#AFB2BF" />
               )}
             </span>
+            <Link to="/forgetPassword" className="absolute right-2 bottom-[-22px]">
+              <p className="text-blue-100 text-sm">Forget Password</p>
+            </Link>
           </label>
 
           <button className="font-medium mt-6 px-6 py-2 bg-yellow-50 rounded-[8px] text-richblack-900 cursor-pointer">

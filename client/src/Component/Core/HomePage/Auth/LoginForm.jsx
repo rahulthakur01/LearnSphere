@@ -60,6 +60,7 @@ const LoginForm = () => {
               value={password}
               placeholder="Enter password"
               required
+              onChange={handleOnChange}
               className="w-full rounded-[0.5rem] bg-richblack-800 p-[12px] text-richblack-5"
               style={{
                 boxShadow: " inset 0px -1px 0px rgba(255, 255, 255, 0.18)",

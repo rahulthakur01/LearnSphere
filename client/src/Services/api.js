@@ -4,7 +4,7 @@ console.log("BASE_URL =", BASE_URL);
 // Auth Endpoints
 export const endPoints = {
     SENDOTP_API: BASE_URL + '/auth/sendotp',
-    SIGNUP_API: BASE_URL + 'auth/signup',
+    SIGNUP_API: BASE_URL + '/auth/signup',
     RESETPASSWORDTOKEN_API: BASE_URL + '/auth/reset-password-token',
     RESETPASSWORD_API: BASE_URL + '/auth/reset-password'
 }

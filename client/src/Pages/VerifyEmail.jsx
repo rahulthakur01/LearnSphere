@@ -1,16 +1,92 @@
-import React, { useState } from "react";
-import { useSelector } from "react-redux";
+import React, { useEffect, useRef, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { FaArrowLeft } from "react-icons/fa6";
-
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
+import { sendOtp, signUp } from "../Services/oprations/authAPI";
 const VerifyEmail = () => {
-  const { loading } = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { signUpData, loading } = useSelector((state) => state.auth);
+
   const OTP_LEN = 6;
   const [otp, setOtp] = useState(new Array(OTP_LEN).fill(""));
+  const inputRef = useRef([]);
 
-  const handleOnChange = (value, index)=>{
+  useEffect(() => {
+    inputRef.current[0]?.focus();
+  }, []);
 
-  }
+  useEffect(() => {
+    if (!signUpData) {
+      navigate("/signup");
+    }
+  }, [signUpData, navigate]);
+
+  //handleOnChange
+  const handleOnChange = (value, index) => {
+    if (isNaN(value)) return;
+
+    const newOtp = [...otp];
+    newOtp[index] = value.slice(-1);
+    setOtp(newOtp);
+
+    if (value && index < OTP_LEN - 1) {
+      inputRef.current[index + 1]?.focus();
+    }
+  };
+  //handleOnKeyDown
+  const handleOnKeyDown = (e, index) => {
+    if (!e.target.value && e.key === "Backspace") {
+      inputRef.current[index - 1]?.focus();
+    }
+  };
+  //handleOnSubmit
+  const handleOnSubmit = (e) => {
+    e.preventDefault();
+    const enteredOtp = otp.join("");
+    if (enteredOtp.length !== OTP_LEN) {
+      toast.error(`Please enter ${OTP_LEN} - digit OTP`);
+      return;
+    }
+
+    if (!signUpData) {
+      toast.error("Signup data missing , please signup again");
+      navigate("/signup");
+      return;
+    }
+    const {
+      firstName,
+      lastName,
+      email,
+      password,
+      confirmPassword,
+      accountType,
+      navigate,
+    } = signUpData;
+
+    dispatch(
+      signUp(
+        accountType,
+        firstName,
+        lastName,
+        email,
+        password,
+        confirmPassword,
+        enteredOtp,
+        navigate
+      )
+    );
+  };
+  const handleResendOtp = () => {
+    if (signUpData?.email) {
+      dispatch(sendOtp(signUpData?.email));
+      toast.success("OTP Resent Successfully!");
+    } else {
+      toast.error("Email not found, please signup again");
+      navigate("/signup");
+    }
+  };
 
   return (
     <>
@@ -25,26 +101,26 @@ const VerifyEmail = () => {
             <p className="text-[1.125rem] leading-[1.625rem] my-4 text-richblack-100">
               A verification code has been sent to you. Enter the code below
             </p>
-            <form>
-             {
-                otp.map((input, index)=>{
-                  return (
-                    <input 
+            <form onSubmit={handleOnSubmit}>
+              {otp.map((input, index) => {
+                return (
+                  <input
                     key={index}
-                    value={input}
-                    onChange={(e)=>handleOnChange(e.target.value, index)}
+                    value={otp[index]}
+                    onChange={(e) => handleOnChange(e.target.value, index)}
+                    onKeyDown={(e) => handleOnKeyDown(e, index)}
+                    ref={(input) => (inputRef.current[index] = input)}
                     className="w-10 h-10 text-center text-lg rounded-md border border-richblack-600 bg-richblack-700 text-richblack-5 focus:outline-none focus:border-yellow-50"
-                    />
-                  )
-                })
-             }
+                  />
+                );
+              })}
+              <button
+                type="submit"
+                className="w-full bg-yellow-50 py-[12px] px-[12px] rounded-[8px] mt-6 font-medium text-richblack-900"
+              >
+                Verify Email
+              </button>
             </form>
-            <button
-              type="submit"
-              className="w-full bg-yellow-50 py-[12px] px-[12px] rounded-[8px] mt-6 font-medium text-richblack-900"
-            >
-              Verify Email
-            </button>
 
             <div className="flex gap-4 items-center justify-between mt-6">
               <Link
@@ -54,7 +130,10 @@ const VerifyEmail = () => {
                 <FaArrowLeft />
                 <p className=" ">Back to Signup</p>
               </Link>
-              <button className="text-blue-200 cursor-pointer">
+              <button
+                onClick={handleResendOtp}
+                className="text-blue-200 cursor-pointer"
+              >
                 Resend it
               </button>
             </div>

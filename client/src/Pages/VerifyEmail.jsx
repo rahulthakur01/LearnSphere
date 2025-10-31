@@ -5,7 +5,13 @@ import { FaArrowLeft } from "react-icons/fa6";
 import { Link } from "react-router-dom";
 const VerifyEmail = () => {
   const { loading } = useSelector((state) => state.auth);
-  const [otp, setOtp] = useState("");
+  const OTP_LEN = 6;
+  const [otp, setOtp] = useState(new Array(OTP_LEN).fill(""));
+
+  const handleOnChange = (value, index)=>{
+
+  }
+
   return (
     <>
       <div className="bg-richblack-800 absolute left-[50%] top-[20%] translate-x-[-50%]">
@@ -20,7 +26,18 @@ const VerifyEmail = () => {
               A verification code has been sent to you. Enter the code below
             </p>
             <form>
-             
+             {
+                otp.map((input, index)=>{
+                  return (
+                    <input 
+                    key={index}
+                    value={input}
+                    onChange={(e)=>handleOnChange(e.target.value, index)}
+                    className="w-10 h-10 text-center text-lg rounded-md border border-richblack-600 bg-richblack-700 text-richblack-5 focus:outline-none focus:border-yellow-50"
+                    />
+                  )
+                })
+             }
             </form>
             <button
               type="submit"

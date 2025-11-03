@@ -1,11 +1,16 @@
 import { apiConnector } from "../apiConnector";
 import { endPoints } from "../api";
-import { useDispatch } from "react-redux";
 import toast from "react-hot-toast";
-import { setLoading } from "../../Redux/slices/authSlice";
+import { setLoading, setToken } from "../../Redux/slices/authSlice";
+import {setUser} from "../../Redux/slices/proFileSlice";
 
-const { SENDOTP_API, RESETPASSWORDTOKEN_API, RESETPASSWORD_API, SIGNUP_API } =
-  endPoints;
+const {
+  SENDOTP_API,
+  RESETPASSWORDTOKEN_API,
+  RESETPASSWORD_API,
+  SIGNUP_API,
+  LOGIN_API,
+} = endPoints;
 
 // sendotp
 export const sendOtp = (email, navigate) => {
@@ -37,13 +42,13 @@ export const sendOtp = (email, navigate) => {
 };
 //signup
 export const signUp = (
+  accountType,
   firstName,
   lastName,
   email,
   password,
   confirmPassword,
   otp,
-  accountType,
   navigate
 ) => {
   return async (dispatch) => {
@@ -75,6 +80,39 @@ export const signUp = (
     toast.dismiss(toastId);
   };
 };
+
+// login
+export const login = (email, password, navigate) => {
+  return async (dispatch) => {
+    const toastId = toast.loading("Loding...");
+    dispatch(setLoading(true));
+    try {
+      const response = await apiConnector("POST", LOGIN_API, {
+        email,
+        password,
+      });
+      console.log("LOGIN RESPONSE...", response);
+      if (!response.data.success) {
+        throw new Error(response.data.message);
+      }
+
+      toast.success("Login successful");
+      dispatch(setToken(response.data.token));
+      const userImg = response.data?.user?.image
+        ? response.data.user.image
+        : `https://api.dicebear.com/5.x/initials/svg?seed=${response.data.user.firstName} ${response.data.user.lastName}`;
+      dispatch(setUser({ ...response.data.user, image: userImg }));
+      localStorage.setItem("token", JSON.stringify(response.data.token));
+      navigate("/dashboard/my-profile");
+    } catch (error) {
+      console.log("Login api error........", error);
+      toast.error("Login Failed");
+    }
+    dispatch(setLoading(false));
+    toast.dismiss(toastId);
+  };
+};
+
 // get password reset token
 export const getPasswordResetToken = (email, setEmailSent) => {
   return async (dispatch) => {

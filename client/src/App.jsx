@@ -9,6 +9,7 @@ import OpenRoute from "./Component/Core/HomePage/Auth/OpenRoute";
 import VerifyEmail from "./Pages/VerifyEmail";
 import ForgetPassword from "./Pages/ForgotPassword";
 import UpdatePassword from "./Pages/UpdatePassword";
+import About from "./Pages/About";
 function App() {
   return (
     <>
@@ -55,6 +56,14 @@ function App() {
             element={
               <OpenRoute>
                 <UpdatePassword />
+              </OpenRoute>
+            }
+          />
+          <Route
+            path="about"
+            element={
+              <OpenRoute>
+                <About />
               </OpenRoute>
             }
           />

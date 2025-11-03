@@ -4,6 +4,7 @@ import { FaEyeSlash } from "react-icons/fa6";
 import { useDispatch } from "react-redux";
 import { useNavigate, useNavigationType } from "react-router-dom";
 import { Link } from "react-router-dom";
+import {login} from "../../../../Services/oprations/authAPI"
 const LoginForm = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -55,7 +56,7 @@ const LoginForm = () => {
               Password <sup className="text-pink-200">*</sup>
             </p>
             <input
-              type="text"
+              type={showPassword ? "password":"text"}
               name="password"
               value={password}
               placeholder="Enter password"

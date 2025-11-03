@@ -62,7 +62,7 @@ const VerifyEmail = () => {
       password,
       confirmPassword,
       accountType,
-      navigate,
+      
     } = signUpData;
 
     dispatch(

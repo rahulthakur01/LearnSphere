@@ -4,9 +4,15 @@ import { useForm } from "react-hook-form";
 const ContactUsFom = () => {
   return (
     <>
-         <div>
-   
+         <form>
+
+        <div>
+          <div>
+
+          </div>
+          
         </div>
+        </form>
     </>
   )
 }

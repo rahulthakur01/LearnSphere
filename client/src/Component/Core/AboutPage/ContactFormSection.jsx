@@ -1,5 +1,5 @@
 import React from "react";
-import ContactUsFom from "../ContactPage/ContactUsFom";
+import ContactUsForm from "../ContactPage/ContactUsForm";
 
 const ContactFormSection = () => {
   return (
@@ -13,7 +13,7 @@ const ContactFormSection = () => {
         </div>
 
         <div>
-            <ContactUsFom/>
+            <ContactUsForm/>
         </div>
 
       </div>

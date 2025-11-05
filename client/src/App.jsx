@@ -9,6 +9,7 @@ import OpenRoute from "./Component/Core/HomePage/Auth/OpenRoute";
 import VerifyEmail from "./Pages/VerifyEmail";
 import ForgetPassword from "./Pages/ForgotPassword";
 import UpdatePassword from "./Pages/UpdatePassword";
+import ContactPage from "./Pages/ContactPage";
 import About from "./Pages/About";
 function App() {
   return (
@@ -67,6 +68,7 @@ function App() {
               </OpenRoute>
             }
           />
+          <Route path="contact" element={<ContactPage/>}/>
         </Routes>
       </div>
     </>

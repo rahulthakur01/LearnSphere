@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import countryCode from "../../../data/countrycode.json";
-import {apiConnector} from "../../../Services/apiConnector";
+import {apiConnector} from "../../../Services/apiConnector"
+import {contactUsEndpoints} from "../../../Services/api"
 const ContactUsForm = () => {
   const[loading, setLoading] = useState(false)
   const {
@@ -11,11 +12,33 @@ const ContactUsForm = () => {
     formState: { errors, isSubmitSuccessful },
   } = useForm();
 
-  const submitContactForm = (data) => {
+  const submitContactForm = async (data) => {
+    console.log("DATA.....", data);
     try {
-      setLoading(true)
-    } catch (error) {}
+      setLoading(true);
+      const response = await apiConnector("POST", contactUsEndpoints.CONTACT_US_API, data );
+      console.log("RESPONSE", response);
+
+      setLoading(false)
+
+    } catch (error) {
+      console.log("Error message", error.message)
+    }
   };
+
+  useEffect(()=>{
+    if(isSubmitSuccessful){
+    reset({
+        firstName:"",
+        lastName:"",
+        email:"", 
+        countrycode:"",
+        phoneNumber:"",
+        message:"",
+    })
+    }
+  },[])
+
 
   return (
     <form onSubmit={handleSubmit(submitContactForm)}>
@@ -32,13 +55,13 @@ const ContactUsForm = () => {
               {...register("firstName", { required: true })}
               className="bg-richblack-700 text-[16px] rounded-lg text-richblack-5 leading-[24px] shadow-[0_0_5x_0] placeholder:text-richblack-5 p-3 focus:outline-none"
             />
-            {errors.firstName && <span>Enter your first name</span>}
+            {errors.firstName && <span className="-mt-1 text-[12px] text-yellow-100">Enter your first name</span>}
           </div>
 
           <div className="flex flex-col gap-2 ">
-            <lable htmlFor="lastName" className="text-richblack-5 text-[14px]">
+            <label htmlFor="lastName" className="text-richblack-5 text-[14px]">
               Last Name
-            </lable>
+            </label>
             <input
               type="text"
               name="lastName"
@@ -47,33 +70,35 @@ const ContactUsForm = () => {
               {...register("lastName", { required: true })}
               className="bg-richblack-700 text-[16px] rounded-lg text-richblack-5 leading-[24px] shadow-[0_0_5x_0] placeholder:text-richblack-5 p-3 focus:outline-none"
             />{" "}
-            {errors.lastName && <span>Enter your last name</span>}
+            {errors.lastName && <span className="-mt-1 text-[12px] text-yellow-100">Enter your last name</span>}
           </div>
         </div>
         <div className="flex flex-col gap-2 ">
-          <lablel htmlFor="email" className="text-richblack-5 text-[14px]">
+          <label htmlFor="email" className="text-richblack-5 text-[14px]">
             Email
-          </lablel>
+          </label>
           <input
             type="text"
+            name="email"
             id="email"
             placeholder="Enter your email"
             {...register("email", { required: true })}
             className="bg-richblack-700 text-[16px] rounded-lg text-richblack-5 leading-[24px] shadow-[0_0_5x_0] placeholder:text-richblack-5 p-3 focus:outline-none"
           />{" "}
-          {errors.error && <span> Enter your email</span>}
+          {errors.email && <span className="-mt-1 text-[12px] text-yellow-100"> Enter your email</span>}
         </div>
 
         <div>
           <label htmlFor="phoneNumber" className="text-richblack-5 text-[14px]">
             Phone Number
           </label>
-          <div className="flex text-richblack-5 gap-4 items-center">
+          <div className="flex text-richblack-5 gap-4 items-center mt-2">
             <div className="flex w-[100px] flex-col gap-4">
               <select
                 type="text"
                 name="fname"
                 id="fname"
+                {...register("countrycode",{required:true})}
                 className="bg-richblack-700 text-[16px] rounded-lg text-richblack-5 leading-[24px] shadow-[0_0_5x_0] placeholder:text-richblack-5 p-3 focus:outline-none"
               >
                 {countryCode.map((code, index) => {
@@ -84,6 +109,7 @@ const ContactUsForm = () => {
                   );
                 })}
               </select>
+              {errors.fname && <span className="-mt-1 text-[12px] text-yellow-100">choose</span>}
             </div>
             <div className="flex w-[calc(100%-90px)] flex-col gap-2">
               <input
@@ -91,7 +117,7 @@ const ContactUsForm = () => {
                 name="phoneNumber"
                 id="phoneNumber"
                 placeholder="enter your phone"
-                {...register("phoneNo", {
+                {...register("phoneNumber", {
                   required: {
                     value: true,
                     message: "Please enter your Phone Number.",
@@ -101,6 +127,7 @@ const ContactUsForm = () => {
                 })}
                 className="bg-richblack-700 text-[16px] rounded-lg text-richblack-5 leading-[24px] shadow-[0_0_5x_0] placeholder:text-richblack-5 p-3 focus:outline-none"
               />
+              {errors.phoneNumber && <span className="-mt-1 text-[12px] text-yellow-100">Enter your phone number</span>}
             </div>
           </div>
         </div>
@@ -118,11 +145,14 @@ const ContactUsForm = () => {
             className="bg-richblack-700 text-[16px] rounded-lg text-richblack-5 leading-[24px] shadow-[0_0_5x_0] placeholder:text-richblack-5 p-3 focus:outline-none"
             {...register("message", { required: true })}
           />
-          {errors.message && <span>enter some text</span>}
+          {errors.message && <span className="-mt-1 text-[12px] text-yellow-100">enter some text</span>}
         </div>
 
-        <div>
-          <button type="submit">Send message</button>
+        <div className="">
+          <button type="submit"
+          disabled={loading}
+          className={`rounded-md bg-yellow-50 px-6 py-3 text-center text-[13px] font-bold text-black w-full ${ !loading && "transition-all duration-300 hover:scale-95"} disabled:bg-richblack-500 `}
+          >Send message</button>
         </div>
       </div>
     </form>

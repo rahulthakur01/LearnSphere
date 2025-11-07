@@ -5,12 +5,12 @@ const ContactPage = () => {
   return (
     <>
       <main>
-        <section className="w-11/12 max-w-[1260px] border mx-auto mt-[80px] text-richblack-5">
-          <div className="flex items-center gap-8">
-            <div className="lg:w-[40%] border">
+        <section className="w-11/12 max-w-[1260px] mx-auto mt-[60px] text-richblack-5">
+          <div className="flex gap-8">
+            <div className="lg:w-[40%] ">
                 <ContactDetails/>
             </div>
-            <div className="lg:w-[60%] border">
+            <div className="lg:w-[60%] ">
                 <ContactForm/>
             </div>
           </div>

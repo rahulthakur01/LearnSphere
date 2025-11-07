@@ -11,6 +11,7 @@ import ForgetPassword from "./Pages/ForgotPassword";
 import UpdatePassword from "./Pages/UpdatePassword";
 import ContactPage from "./Pages/ContactPage";
 import About from "./Pages/About";
+import Dashboard from "./Pages/Dashboard";
 function App() {
   return (
     <>
@@ -69,6 +70,10 @@ function App() {
             }
           />
           <Route path="contact" element={<ContactPage/>}/>
+
+          <Route path="dashboard" element={<Dashboard/>}>
+            
+          </Route>
         </Routes>
       </div>
     </>

@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import countryCode from "../../../data/countrycode.json";
-import {apiConnector} from "../../../Services/apiConnector"
-import {contactUsEndpoints} from "../../../Services/api"
+import { apiConnector } from "../../../Services/apiConnector";
+import { contactUsEndpoints } from "../../../Services/api";
 const ContactUsForm = () => {
-  const[loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(false);
   const {
     register,
     handleSubmit,
@@ -16,29 +16,31 @@ const ContactUsForm = () => {
     console.log("DATA.....", data);
     try {
       setLoading(true);
-      const response = await apiConnector("POST", contactUsEndpoints.CONTACT_US_API, data );
+      const response = await apiConnector(
+        "POST",
+        contactUsEndpoints.CONTACT_US_API,
+        data
+      );
       console.log("RESPONSE", response);
 
-      setLoading(false)
-
+      setLoading(false);
     } catch (error) {
-      console.log("Error message", error.message)
+      console.log("Error message", error.message);
     }
   };
 
-  useEffect(()=>{
-    if(isSubmitSuccessful){
-    reset({
-        firstName:"",
-        lastName:"",
-        email:"", 
-        countrycode:"",
-        phoneNumber:"",
-        message:"",
-    })
+  useEffect(() => {
+    if (isSubmitSuccessful) {
+      reset({
+        firstName: "",
+        lastName: "",
+        email: "",
+        countrycode: "",
+        phoneNumber: "",
+        message: "",
+      });
     }
-  },[])
-
+  }, []);
 
   return (
     <form onSubmit={handleSubmit(submitContactForm)}>
@@ -53,9 +55,13 @@ const ContactUsForm = () => {
               id="firstName"
               placeholder="First Name"
               {...register("firstName", { required: true })}
-              className="bg-richblack-700 text-[16px] rounded-lg text-richblack-5 leading-[24px] shadow-[0_0_5x_0] placeholder:text-richblack-5 p-3 focus:outline-none"
+              className="bg-richblack-700 text-[16px] rounded-lg text-richblack-5 leading-[24px] shadow-[0_0_5x_0] placeholder:text-richblack-200 p-3 focus:outline-none"
             />
-            {errors.firstName && <span className="-mt-1 text-[12px] text-yellow-100">Enter your first name</span>}
+            {errors.firstName && (
+              <span className="-mt-1 text-[12px] text-yellow-100">
+                Enter your first name
+              </span>
+            )}
           </div>
 
           <div className="flex flex-col gap-2 ">
@@ -68,9 +74,13 @@ const ContactUsForm = () => {
               id="lastName"
               placeholder="Last Name"
               {...register("lastName", { required: true })}
-              className="bg-richblack-700 text-[16px] rounded-lg text-richblack-5 leading-[24px] shadow-[0_0_5x_0] placeholder:text-richblack-5 p-3 focus:outline-none"
+              className="bg-richblack-700 text-[16px] rounded-lg text-richblack-5 leading-[24px] shadow-[0_0_5x_0] placeholder:text-richblack-200 p-3 focus:outline-none"
             />{" "}
-            {errors.lastName && <span className="-mt-1 text-[12px] text-yellow-100">Enter your last name</span>}
+            {errors.lastName && (
+              <span className="-mt-1 text-[12px] text-yellow-100">
+                Enter your last name
+              </span>
+            )}
           </div>
         </div>
         <div className="flex flex-col gap-2 ">
@@ -83,9 +93,14 @@ const ContactUsForm = () => {
             id="email"
             placeholder="Enter your email"
             {...register("email", { required: true })}
-            className="bg-richblack-700 text-[16px] rounded-lg text-richblack-5 leading-[24px] shadow-[0_0_5x_0] placeholder:text-richblack-5 p-3 focus:outline-none"
+            className="bg-richblack-700 text-[16px] rounded-lg text-richblack-5 leading-[24px] shadow-[0_0_5x_0] placeholder:text-richblack-200 p-3 focus:outline-none"
           />{" "}
-          {errors.email && <span className="-mt-1 text-[12px] text-yellow-100"> Enter your email</span>}
+          {errors.email && (
+            <span className="-mt-1 text-[12px] text-yellow-100">
+              {" "}
+              Enter your email
+            </span>
+          )}
         </div>
 
         <div>
@@ -93,13 +108,13 @@ const ContactUsForm = () => {
             Phone Number
           </label>
           <div className="flex text-richblack-5 gap-4 items-center mt-2">
-            <div className="flex w-[100px] flex-col gap-4">
+            <div className="flex w-[120px] flex-col gap-4">
               <select
                 type="text"
                 name="fname"
                 id="fname"
-                {...register("countrycode",{required:true})}
-                className="bg-richblack-700 text-[16px] rounded-lg text-richblack-5 leading-[24px] shadow-[0_0_5x_0] placeholder:text-richblack-5 p-3 focus:outline-none"
+                {...register("countrycode", { required: true })}
+                className="bg-richblack-700 text-[16px] rounded-lg text-richblack-5 leading-[24px] shadow-[0_0_5x_0] placeholder:text-richblack-200 p-3 focus:outline-none"
               >
                 {countryCode.map((code, index) => {
                   return (
@@ -109,14 +124,18 @@ const ContactUsForm = () => {
                   );
                 })}
               </select>
-              {errors.fname && <span className="-mt-1 text-[12px] text-yellow-100">choose</span>}
+              {errors.fname && (
+                <span className="-mt-1 text-[12px] text-yellow-100">
+                  choose
+                </span>
+              )}
             </div>
             <div className="flex w-[calc(100%-90px)] flex-col gap-2">
               <input
                 type="number"
                 name="phoneNumber"
                 id="phoneNumber"
-                placeholder="enter your phone"
+                placeholder="97852-65281"
                 {...register("phoneNumber", {
                   required: {
                     value: true,
@@ -125,9 +144,13 @@ const ContactUsForm = () => {
                   maxLength: { value: 12, message: "Invalid Phone Number" },
                   minLength: { value: 10, message: "Invalid Phone Number" },
                 })}
-                className="bg-richblack-700 text-[16px] rounded-lg text-richblack-5 leading-[24px] shadow-[0_0_5x_0] placeholder:text-richblack-5 p-3 focus:outline-none"
+                className="bg-richblack-700 text-[16px] rounded-lg text-richblack-5 leading-[24px] shadow-[0_0_5x_0] placeholder:text-richblack-200 p-3 focus:outline-none"
               />
-              {errors.phoneNumber && <span className="-mt-1 text-[12px] text-yellow-100">Enter your phone number</span>}
+              {errors.phoneNumber && (
+                <span className="-mt-1 text-[12px] text-yellow-100">
+                  Enter your phone number
+                </span>
+              )}
             </div>
           </div>
         </div>
@@ -140,19 +163,29 @@ const ContactUsForm = () => {
             type="text"
             name="message"
             id="message"
+            placeholder="Enter your message here"
             cols={30}
             rows={7}
-            className="bg-richblack-700 text-[16px] rounded-lg text-richblack-5 leading-[24px] shadow-[0_0_5x_0] placeholder:text-richblack-5 p-3 focus:outline-none"
+            className="bg-richblack-700 text-[16px] rounded-lg text-richblack-5 leading-[24px] shadow-[0_0_5x_0] placeholder:text-richblack-200 p-3 focus:outline-none"
             {...register("message", { required: true })}
           />
-          {errors.message && <span className="-mt-1 text-[12px] text-yellow-100">enter some text</span>}
+          {errors.message && (
+            <span className="-mt-1 text-[12px] text-yellow-100">
+              enter some text
+            </span>
+          )}
         </div>
 
         <div className="">
-          <button type="submit"
-          disabled={loading}
-          className={`rounded-md bg-yellow-50 px-6 py-3 text-center text-[13px] font-bold text-black w-full ${ !loading && "transition-all duration-300 hover:scale-95"} disabled:bg-richblack-500 `}
-          >Send message</button>
+          <button
+            type="submit"
+            disabled={loading}
+            className={`rounded-md bg-yellow-50 px-6 py-3 text-center text-[13px] font-bold text-black w-full ${
+              !loading && "transition-all duration-300 hover:scale-95"
+            } disabled:bg-richblack-500 `}
+          >
+            Send message
+          </button>
         </div>
       </div>
     </form>

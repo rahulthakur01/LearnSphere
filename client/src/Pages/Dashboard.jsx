@@ -1,0 +1,21 @@
+import React from "react";
+import { Outlet } from "react-router-dom";
+import Sidebar from "../Component/Core/Dashboard/Sidebar";
+const Dashboard = () => {
+  return (
+    <>
+      <main className="flex min-h-[cal(100vh-3.5rem)]">
+        <Sidebar/>
+        <div className="min-h-[cal(100vh-3.5rem)] border border-red-500">
+            <div className="text-richblack-50 w-10/11 max-w-[1000px] py-10 mx-auto">
+                {/* <Outlet/> */}
+                <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Doloremque, qui. Repellendus non inventore dicta deserunt quidem eos modi aut nobis sunt impedit rerum perspiciatis eveniet officiis illo ducimus molestiae, quos ratione expedita illum, maxime ea totam porro! Non veritatis enim pariatur delectus quisquam reprehenderit dicta vero, quod nobis distinctio explicabo quibusdam, itaque error culpa nemo, deleniti hic! Maiores natus laboriosam assumenda vero ullam ab repellendus et sed, quaerat minima nulla temporibus labore ut possimus totam nisi facere delectus consequuntur minus similique! Voluptatum, repudiandae doloremque nemo incidunt velit, cupiditate quisquam recusandae earum blanditiis expedita deleniti quia harum aspernatur cum facere. Iste ratione deleniti eos vitae, accusamus ullam dolore praesentium eum soluta ad voluptatum magnam accusantium numquam itaque tempore sint? Eos odit earum iste ut, nobis possimus reprehenderit ex quas delectus maiores praesentium neque vero necessitatibus sint asperiores quae facere cum at suscipit molestias! Alias perferendis atque dolorum a quo, dolore molestias debitis nulla et, repellat recusandae perspiciatis iusto necessitatibus omnis sint! Error expedita repudiandae maiores cum nobis aut ad consequatur, facere, assumenda blanditiis esse enim tenetur atque? Ullam, qui et magnam enim voluptatem maxime suscipit officia harum fuga molestias ab cumque? Odio dolorem nihil corrupti officiis, cupiditate natus qui fuga totam quae possimus, quis repellat suscipit inventore veritatis quaerat, vitae quas perferendis velit dolor porro eligendi non aperiam ut mollitia. Vitae enim modi repellendus. Cumque, natus. In iusto velit expedita voluptatibus quod delectus laudantium beatae perspiciatis consectetur harum facere ipsam asperiores, tempora necessitatibus, assumenda, doloremque voluptas deserunt iste totam. Dolorem, sapiente vitae laudantium voluptatibus nemo nesciunt harum molestias nisi, quia, qui impedit velit libero dolorum a labore rem incidunt ipsam deleniti necessitatibus provident illum. Maxime voluptatem neque nisi earum ullam sunt, qui laudantium, error harum eum aliquid ab ex numquam perferendis. Illo in nesciunt alias! Impedit, dignissimos corrupti, error id corporis debitis, laboriosam alias reiciendis excepturi tenetur eos! Aspernatur rerum dolores adipisci debitis provident nam repellat officiis, odit, non porro illo quibusdam nisi quam facere ea voluptas dolore distinctio obcaecati minus accusamus. Molestiae laborum maiores molestias ducimus aperiam debitis, praesentium excepturi officia unde enim accusantium ipsam rerum deleniti accusamus soluta corrupti, placeat aut? Aliquam blanditiis nam ipsum voluptatem harum, corporis quam culpa quas unde ut quaerat consequuntur qui deleniti labore expedita! Nisi animi deleniti facere quidem, tempore sint et, accusamus alias, illo dolorum hic. Non iure nam molestias cum commodi iusto quod! Unde, accusantium nobis esse quod repellat illo, aut nisi optio inventore modi et alias ducimus aperiam, tenetur fuga rem cum. Vero esse facilis impedit ipsa tenetur sapiente mollitia eveniet quod voluptates dolores assumenda, nesciunt aut non, corrupti nobis, iure culpa quibusdam provident amet! Tempore eos repellat ratione atque error ullam unde magni doloremque quod voluptate omnis debitis distinctio dolorem perferendis hic quidem natus labore, cupiditate deleniti sunt? Incidunt reprehenderit natus consectetur perferendis architecto a. Atque soluta cumque sequi repellendus aut eligendi vero pariatur ipsum nemo voluptas corporis, modi tempore? A, alias ut architecto unde saepe, temporibus perferendis cum blanditiis illum rerum dolore incidunt dolorum, magnam at eveniet? Fuga, reiciendis?</p>
+
+            </div>
+        </div>
+      </main>
+    </>
+  );
+};
+
+export default Dashboard;

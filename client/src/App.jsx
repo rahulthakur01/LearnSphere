@@ -1,4 +1,3 @@
-import { useState } from "react";
 import "./App.css";
 import { Route, Routes } from "react-router-dom";
 import Home from "./Pages/Home";
@@ -12,6 +11,8 @@ import UpdatePassword from "./Pages/UpdatePassword";
 import ContactPage from "./Pages/ContactPage";
 import About from "./Pages/About";
 import Dashboard from "./Pages/Dashboard";
+import MyProfile from "./Component/Core/Dashboard/MyProfile";
+
 function App() {
   return (
     <>
@@ -69,11 +70,10 @@ function App() {
               </OpenRoute>
             }
           />
-          <Route path="contact" element={<ContactPage/>}/>
+          <Route path="contact" element={<ContactPage />} />
 
-          <Route path="dashboard" element={<Dashboard/>}>
-            
-          </Route>
+          <Route path="dashboard" element={<Dashboard />} />
+          <Route path="dashboard/my-profile" element={<MyProfile/>}/>
         </Routes>
       </div>
     </>

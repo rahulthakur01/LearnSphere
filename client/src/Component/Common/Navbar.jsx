@@ -2,7 +2,7 @@ import React from "react";
 import { NavbarLinks } from "../../data/navbar-links";
 import { Link, matchPath, useLocation } from "react-router-dom";
 import { FaChevronDown } from "react-icons/fa";
-
+import ProfileDropdown from "../Core/HomePage/Auth/ProfileDropdown";
 import { useSelector } from "react-redux";
 
 const Navbar = () => {
@@ -74,6 +74,9 @@ const Navbar = () => {
                </button>
                 </Link>
               )
+            }
+            {
+              token !== null && (<ProfileDropdown/>)
             }
           </div>
         </div>

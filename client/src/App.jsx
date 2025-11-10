@@ -12,6 +12,7 @@ import ContactPage from "./Pages/ContactPage";
 import About from "./Pages/About";
 import Dashboard from "./Pages/Dashboard";
 import MyProfile from "./Component/Core/Dashboard/MyProfile";
+import PrivateRoute from "./Component/Core/HomePage/Auth/PrivateRoute";
 
 function App() {
   return (
@@ -71,9 +72,15 @@ function App() {
             }
           />
           <Route path="contact" element={<ContactPage />} />
-
-          <Route path="dashboard" element={<Dashboard />} />
-          <Route path="dashboard/my-profile" element={<MyProfile/>}/>
+          <Route
+            element={
+              <PrivateRoute>
+                <Dashboard />
+              </PrivateRoute>
+            }
+          >
+            <Route path="dashboard/my-profile" element={<MyProfile />} />
+          </Route>
         </Routes>
       </div>
     </>

@@ -1,6 +1,8 @@
 import {combineReducers} from "@reduxjs/toolkit"
 import authReducer from "../slices/authSlice"
+import profileReducer from "../slices/proFileSlice"
 const rootReducer = combineReducers({
-    auth: authReducer
+    auth: authReducer,
+    profile: profileReducer,
 })
 export default rootReducer

@@ -103,6 +103,7 @@ export const login = (email, password, navigate) => {
         : `https://api.dicebear.com/5.x/initials/svg?seed=${response.data.user.firstName} ${response.data.user.lastName}`;
       dispatch(setUser({ ...response.data.user, image: userImg }));
       localStorage.setItem("token", JSON.stringify(response.data.token));
+      localStorage.setItem("user", JSON.stringify(response.data.user))
       navigate("/dashboard/my-profile");
     } catch (error) {
       console.log("Login api error........", error);
@@ -159,3 +160,15 @@ export const resetPassword = (password, confirmPassword, token, navigate) => {
     disptach(setLoading(false));
   };
 };
+
+// Log out
+export const logout = (navigate)=>{
+  return (dispatch)=>{
+   dispatch( setUser(null));
+   dispatch(setToken(null));
+   localStorage.removeItem("token");
+   localStorage.removeItem("user");
+   toast.success("logged out")
+   navigate("/")
+  }
+}

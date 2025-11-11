@@ -25,14 +25,14 @@ const Sidebar = () => {
 
         <div className="w-10/12 h-[1px] border bg-richblack-600 my-6 mx-auto"></div>
 
-        <div className="">
+        <div className="flex flex-col gap-2 ">
           <SidebarLinks
             link={{ name: "settings", path: "dashboard/setting" }}
             iconName="VscSettingsGear"
           />
-          <button>
+          <button className="flex items-center gap-2 text-richblack-5 ml-8">
             <VscSignOut />
-            <span>Logout</span>
+            <span className="">Logout</span>
           </button>
         </div>
       </div>

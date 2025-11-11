@@ -6,7 +6,7 @@ const Dashboard = () => {
     <>
       <main className="flex min-h-[cal(100vh-3.5rem)]">
         <Sidebar/>
-        <div className="min-h-[cal(100vh-3.5rem)] border border-red-500">
+        <div className="min-h-[cal(100vh-3.5rem)] ">
             <div className="text-richblack-50 w-10/11 max-w-[1000px] py-10 mx-auto ">
                 <Outlet/>
 

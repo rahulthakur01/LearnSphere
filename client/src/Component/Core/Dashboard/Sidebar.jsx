@@ -3,6 +3,7 @@ import { sidebarLinks } from "../../../data/dashboard-links";
 import { useDispatch, useSelector } from "react-redux";
 import SidebarLinks from "./SidebarLinks";
 import { VscSignOut } from "react-icons/vsc";
+import ConfirationModal from "../../Common/ConfirationModal";
 
 const Sidebar = () => {
   const { loading: authLoading, user } = useSelector((state) => state.profile);
@@ -27,14 +28,26 @@ const Sidebar = () => {
 
         <div className="flex flex-col gap-2 ">
           <SidebarLinks
-            link={{ name: "settings", path: "dashboard/setting" }}
+            link={{ name: "settings", path: "dashboard/settings" }}
             iconName="VscSettingsGear"
           />
-          <button className="flex items-center gap-2 text-richblack-5 ml-8">
-            <VscSignOut />
-            <span className="">Logout</span>
-          </button>
+          <div onClick={()=>setConfirmationModal({
+            text1:"Are your sure?",
+            text2:"You're logged out to your account",
+            btnText1:"Logout",
+            btnText2:"Cancel",
+            btn1Handler: ()=>{dispatch(logout(navigate))},
+            btn2Handler: () =>{setConfirmationModal(null)}
+          })}>
+            <div className="flex items-center gap-2 text-richblack-5 ml-8 cursor-pointer">
+              <VscSignOut />
+              <span className="">Logout</span>
+            </div>
+          </div>
         </div>
+
+
+          {confirmationModal && <ConfirationModal modalData={confirmationModal}/>}
       </div>
     </>
   );

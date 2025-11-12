@@ -69,31 +69,31 @@ const MyProfile = () => {
             <TiEdit fontSize={20} />{" "}
           </IconBtn>
         </div>
-        <div>
-          <div className="flex justify-between gap-8  w-[50%] py-2 ">
+        <div className=" w-[50%] ">
+          <div className="flex items-start justify-between gap-3  py-2 ">
             <p className="text-sm leading-[15px] text-richblack-200">
-              {user?.firtName ?? "Rahul"}{" "}
+              {user?.firstName ?? "First Name"}{" "}
             </p>
             <p className="text-sm leading-[15px] text-richblack-200">
-              {user?.lastName ?? "write about yourself"}{" "}
-            </p>
-          </div>
-
-          <div className="flex justify-between gap-8  w-[50%] py-2 ">
-            <p className="text-sm leading-[15px] text-richblack-200">
-              {user?.firtName ?? "Rahul"}{" "}
-            </p>
-            <p className="text-sm leading-[15px] text-richblack-200">
-              {user?.lastName ?? "write about yourself"}{" "}
+              {user?.lastName ?? "Last Name"}{" "}
             </p>
           </div>
 
-          <div className="flex justify-between gap-8  w-[50%] py-2 ">
+          <div className="flex justify-between gap-8 py-2 ">
             <p className="text-sm leading-[15px] text-richblack-200">
-              {user?.firtName ?? "Rahul"}{" "}
+              {user?.email ?? "Email"}{" "}
             </p>
             <p className="text-sm leading-[15px] text-richblack-200">
-              {user?.lastName ?? "write about yourself"}{" "}
+              {user?.phoneNumber ?? "Add Contact Number"}{" "}
+            </p>
+          </div>
+
+          <div className="flex justify-between gap-8 py-2 ">
+            <p className="text-sm leading-[15px] text-richblack-200">
+              {user?.additionalDetails?.gender ?? "Gender"}{" "}
+            </p>
+            <p className="text-sm leading-[15px] text-richblack-200">
+              {user?.additionalDetails?.dateOfBirth ?? "Date of Birth"}{" "}
             </p>
           </div>
         </div>

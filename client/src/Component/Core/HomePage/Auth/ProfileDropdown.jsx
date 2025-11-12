@@ -1,9 +1,11 @@
-import React from 'react'
+import React from "react";
 
 const ProfileDropdown = () => {
   return (
-    <div>ProfileDropdown</div>
-  )
-}
+    <>
+      <div>gd</div>
+    </>
+  );
+};
 
-export default ProfileDropdown
+export default ProfileDropdown;

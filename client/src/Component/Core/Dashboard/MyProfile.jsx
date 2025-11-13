@@ -30,7 +30,7 @@ const MyProfile = () => {
         <IconBtn
           text="Edit"
           onclick={() => {
-            navigate("dashboard/settings");
+            navigate("/dashboard/settings");
           }}
         >
           {" "}
@@ -45,7 +45,7 @@ const MyProfile = () => {
           <IconBtn
             text="Edit"
             onclick={() => {
-              navigate("dashboard/settings");
+              navigate("/dashboard/settings");
             }}
           >
             <TiEdit fontSize={20} />{" "}
@@ -63,7 +63,7 @@ const MyProfile = () => {
           <IconBtn
             text="Edit"
             onclick={() => {
-              navigate("dashboard/settings");
+              navigate("/dashboard/settings");
             }}
           >
             <TiEdit fontSize={20} />{" "}

@@ -3,9 +3,12 @@ import { sidebarLinks } from "../../../data/dashboard-links";
 import { useDispatch, useSelector } from "react-redux";
 import SidebarLinks from "./SidebarLinks";
 import { VscSignOut } from "react-icons/vsc";
-import ConfirationModal from "../../Common/ConfirationModal";
-
+import ConfirmationModal from "../../Common/ConfirmationModal";
+import { useNavigate } from "react-router-dom";
+import { logout } from "../../../Services/oprations/authAPI";
 const Sidebar = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { loading: authLoading, user } = useSelector((state) => state.profile);
   const [confirmationModal, setConfirmationModal] = useState(null);
   if (authLoading) {
@@ -37,8 +40,9 @@ const Sidebar = () => {
             btnText1:"Logout",
             btnText2:"Cancel",
             btn1Handler: ()=>{dispatch(logout(navigate))},
-            btn2Handler: () =>{setConfirmationModal(null)}
-          })}>
+            btn2Handler: () => { setConfirmationModal(null) },
+            
+          })} >
             <div className="flex items-center gap-2 text-richblack-5 ml-8 cursor-pointer">
               <VscSignOut />
               <span className="">Logout</span>
@@ -47,7 +51,7 @@ const Sidebar = () => {
         </div>
 
 
-          {confirmationModal && <ConfirationModal modalData={confirmationModal}/>}
+          {confirmationModal && <ConfirmationModal modalData={confirmationModal}/>}
       </div>
     </>
   );

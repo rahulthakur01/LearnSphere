@@ -15,8 +15,8 @@ const MyProfile = () => {
         <div className="flex gap-2 items-center ">
           <img
             src={user?.image}
-            alt="profile-image"
-            className={`profile-${user?.firstName} w-[70px] rounded-full object-cover`}
+            alt={`profile-${user?.firstName}`}
+            className=" w-[70px] rounded-full object-cover"
           />
           <div className="flex flex-col gap-2">
             <p className="text-xl font-semibold leading-[18px]">

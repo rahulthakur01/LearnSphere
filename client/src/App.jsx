@@ -13,7 +13,7 @@ import About from "./Pages/About";
 import Dashboard from "./Pages/Dashboard";
 import MyProfile from "./Component/Core/Dashboard/MyProfile";
 import PrivateRoute from "./Component/Core/HomePage/Auth/PrivateRoute";
-import Settings from "./Pages/Settings";
+import Settings from "./Component/Core/Dashboard/Settings";
 function App() {
   return (
     <>

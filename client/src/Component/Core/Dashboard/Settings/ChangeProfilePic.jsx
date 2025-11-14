@@ -24,7 +24,7 @@ const ChangeProfilePic = () => {
     try{
         setLoading(true);
         const formData = new FormData();
-        formData.append(imageFile);
+        formData.append("displayPicture",imageFile);
         dispatch(updateDisplayPicture(token, formData)).then(()=>{setLoading(false)})
     }catch(error){
         console.log("Errorr....", error);

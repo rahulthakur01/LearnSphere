@@ -1,6 +1,7 @@
 import ChangeProfilePic from "./ChangeProfilePic";
 import EditProfileInfo from "./EditProfileInfo";
 import UpdatePassword from "./UpdatePassword";
+import DeleteAccount from "./DeleteAccount";
 const Settings = () => {
   return (
     <>
@@ -8,6 +9,7 @@ const Settings = () => {
         <ChangeProfilePic />
         <EditProfileInfo/>
         <UpdatePassword/>
+        <DeleteAccount/>
       </div>
     </>
   );

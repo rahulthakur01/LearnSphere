@@ -17,8 +17,8 @@ const Sidebar = () => {
   console.log("USER TYPE:", user?.accountType);
   return (
     <>
-      <div className="bg-richblack-800 py-10 h-[calc(100vh-3.5rem)] border-r-[1px] border-r-richblue-700 flex flex-col gap-10 ">
-        <div className="flex flex-col gap-2 mt-8 ">
+      <div className="bg-richblack-800 py-10 h-[calc(100vh)] border-r-[1px] border-r-richblue-700 flex flex-col gap-10 ">
+        <div className="flex flex-col gap-2 mt-10 ">
           {sidebarLinks.map((link) => {
             if (link.type && link.type !== user?.accountType) return;
             return (

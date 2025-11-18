@@ -66,7 +66,7 @@ const EditProfileInfo = () => {
                 defaultValue={user?.firstName}
               />
               {errors.firstName && (
-                <span className="-mt-1 text-[12px] text-yellow-100">
+                <span className="-mt-1 text-[12px] text-richblack-100">
                   Enter your first name
                 </span>
               )}

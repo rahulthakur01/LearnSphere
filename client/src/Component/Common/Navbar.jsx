@@ -15,7 +15,7 @@ const Navbar = () => {
   }
   return (
     <>
-      <div className="h-16 flex jusitfy-center items-center border border-b-[1px] border-b-richblack-700 ">
+      <div className="h-16 flex jusitfy-center items-center border border-b-[1px] border-b-richblack-700 fixed top-0 left-0 z-50 w-full bg-richblack-900 ">
         <div className="flex justify-between items-center w-11/12 max-w-[1260px] mx-auto">
           <Link to="/" className="text-white font-bold text-xl">
             LearnSphere

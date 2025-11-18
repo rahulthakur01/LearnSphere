@@ -8,20 +8,19 @@ import { useNavigate } from "react-router-dom";
 import { changePassword } from "../../../../Services/oprations/settingAPI";
 const UpdatePassword = () => {
   const { token } = useSelector((state) => state.auth);
-  const dispatch = useDispatch();
   const navigate = useNavigate();
   const {
     handleSubmit,
     reset,
     register,
-    formState: { errors, isSuccessful },
+    formState: { errors, isSubmitSuccessful },
   } = useForm();
   const [showOldPassword, setShowOldPassword] = useState(false);
   const [showNewPassword, setShowNewPassword] = useState(false);
-  const handleFormSubmit = (data) => {
+  const handleFormSubmit = async (data) => {
     console.log(data);
     try {
-      dispatch(changePassword(token, data));
+      await changePassword(token, data)
     } catch (error) {
       console.log("errorro....", error);
     }
@@ -54,6 +53,11 @@ const UpdatePassword = () => {
                   <FaEye fontSize={20} fill="#AFB2BF" />
                 )}
               </span>
+              {errors.oldPassword && (
+                 <span className="-mt-1 text-[12px] text-yellow-100">
+                Enter your current password
+               </span>
+              )}
             </div>
             <div className="flex flex-col gap-2 mt-2 relative w-full">
               <label htmlFor="newPassword">New Password</label>
@@ -75,6 +79,11 @@ const UpdatePassword = () => {
                   <FaEye fontSize={20} fill="#AFB2BF" />
                 )}
               </span>
+              {errors.newPassword && (
+                 <span className="-mt-1 text-[12px] text-yellow-100">
+                Enter your new password
+               </span>
+              )}
             </div>
           </div>
           <div className="flex flex-row gap-3 justify-end mt-4">

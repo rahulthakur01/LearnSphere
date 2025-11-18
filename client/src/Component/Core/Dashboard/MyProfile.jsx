@@ -3,6 +3,7 @@ import IconBtn from "../../Common/IconBtn";
 import { useSelector } from "react-redux";
 import { TiEdit } from "react-icons/ti";
 import { useNavigate } from "react-router-dom";
+
 const MyProfile = () => {
   const { user } = useSelector((state) => state.profile);
   const navigate = useNavigate();

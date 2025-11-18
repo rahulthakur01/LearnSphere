@@ -6,7 +6,6 @@ const { UPDATE_DISPLAY_PICTURE_API, UPDATE_PROFILE_API, CHANGE_PASSWORD_API } =
   settingsEndpoints;
 
 export const updateDisplayPicture = (token, formData) => {
-  console.log("TOKEN.........", token);
 
   return async (dispatch) => {
     const toastid = toast.loading("Loading....");
@@ -16,9 +15,8 @@ export const updateDisplayPicture = (token, formData) => {
         "PUT",
         UPDATE_DISPLAY_PICTURE_API,
         formData,
-        null,
         {
-          "Content-Type": "multipart/form-data",
+          // "Content-Type": "multipart/form-data",
           Authorization: `Bearer ${token}`,
         }
       );
@@ -38,12 +36,16 @@ export const updateDisplayPicture = (token, formData) => {
 };
 
 export const updateProfile = (token, formData) => {
+  
   return async (dispatch) => {
     const toastId = toast.loading("Loading...");
+  
     try {
       const response = await apiConnector("PUT", UPDATE_PROFILE_API, formData, {
         Authorization: `Bearer ${token}`,
       });
+      console.log("PRINTING...............3")
+      console.log("UPDATE PROFILE API RESPONSE =", response.data);
 
       if (!response.data.success) {
         throw new Error(response.data.message);
@@ -51,7 +53,7 @@ export const updateProfile = (token, formData) => {
       const userImg = response.data.updateUserDetails.image
         ? response.data.updateUserDetails.image
         : `https://api.dicebear.com/5.x/initials/svg?seed=${response.data.updatedUserDetails.firstName} ${response.data.updatedUserDetails.lastName}`;
-      dispatch(setUser({ ...response.data.updateUserDetails, image: userImg }));
+      dispatch(setUser({ ...response.data.updateUserDetails, image:userImg }));
       toast.success("Profile updated successfully");
     } catch (error) {
       console.log("ERROR....", error);
@@ -80,6 +82,6 @@ export const changePassword = (token, formData) => {
       console.log("ERROR WHILE CHANGING PASSWORD...", error);
       toast.error("Can not be updated password");
     }
-    toast.dismiss(toastId)
+    toast.dismiss(toastId);
   };
 };

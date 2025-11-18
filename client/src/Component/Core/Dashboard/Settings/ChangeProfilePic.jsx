@@ -1,16 +1,17 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import IconBtn from "../../../Common/IconBtn";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { FiUpload } from "react-icons/fi";
-
+import { updateDisplayPicture } from "../../../../Services/oprations/settingAPI";
 const ChangeProfilePic = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { user } = useSelector((state) => state.profile);
-  const {token} = useSelector((state)=>state.auth)
+  const { token } = useSelector((state) => state.auth);
   const [loading, setLoading] = useState(false);
   const [imageFile, setImageFile] = useState(null);
+  const [fileSource, setFilesource] = useState();
   const profileInputRef = useRef(null);
   const handleClick = () => {
     profileInputRef.current.click();
@@ -18,18 +19,34 @@ const ChangeProfilePic = () => {
   const handleOnFileChange = (e) => {
     const file = e.target.files[0];
     setImageFile(file);
+    filePreview(file);
+  };
+  
+  const filePreview = (file) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onloadend = () => {
+      setFilesource(reader.result);
+    };
   };
 
-  const handleFileUpload =()=>{
-    try{
-        setLoading(true);
-        const formData = new FormData();
-        formData.append("displayPicture",imageFile);
-        dispatch(updateDisplayPicture(token, formData)).then(()=>{setLoading(false)})
-    }catch(error){
-        console.log("Errorr....", error);
+  const handleFileUpload = () => {
+    try {
+      setLoading(true);
+      const formData = new FormData();
+      formData.append("displayPicture", imageFile);
+      dispatch(updateDisplayPicture(token, formData)).then(() => {
+        setLoading(false);
+      });
+    } catch (error) {
+      console.log("Errorr....", error);
     }
-  }
+  };
+  useEffect(() => {
+    if (imageFile) {
+      filePreview(imageFile);
+    }
+  }, [imageFile]);
 
   return (
     <>
@@ -37,7 +54,7 @@ const ChangeProfilePic = () => {
         <h1 className="text-3xl leading-[38px]">My Profile</h1>
         <div className="flex gap-[15px] items-center">
           <img
-            src={user?.image}
+            src={fileSource || user?.image}
             alt={`profile-${user?.firtName}`}
             className="w-[60px] object-cover rounded-full"
           />
@@ -53,7 +70,7 @@ const ChangeProfilePic = () => {
               <button
                 className="cursor-pointer rounded-md bg-richblack-700 py-2 px-5 font-semibold text-richblack-50"
                 onClick={handleClick}
-                disabled={disabled}
+                disabled={loading}
               >
                 {" "}
                 Select

@@ -39,7 +39,7 @@ const EditProfileInfo = () => {
       })
 
     }
-  },[])
+  },[isSubmitSuccessful])
 
   return (
     <>
@@ -139,7 +139,7 @@ const EditProfileInfo = () => {
                 className="bg-richblack-700 text-[16px] rounded-lg text-richblack-5 leading-[24px] shadow-[0_0_5x_0] placeholder:text-richblack-200 p-3 focus:outline-none"
               >
                 {gender.map((ele, i) => (
-                  <option key={i}>{ele}</option>
+                  <option key={i} value={ele}>{ele}</option>
                 ))}
               </select>
 
@@ -159,7 +159,8 @@ const EditProfileInfo = () => {
                 Contact number
               </label>
               <input
-                type="number"
+                type="tel"
+                name="phoneNumber"
                 id="phoneNumber"
                 placeholder="Enter contact number"
                 {...register("phoneNumber", {

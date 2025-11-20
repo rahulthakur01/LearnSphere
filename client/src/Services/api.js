@@ -13,7 +13,10 @@ export const endPoints = {
 export const contactUsEndpoints = {
     CONTACT_US_API : BASE_URL + '/reach/contact'
 }
-
+export const profileEndpoints = {
+    GET_USER_ENROLLED_COURSES_API: BASE_URL + '/profile/getEnrolledCourses'
+}
+// Setting Endpoints
 export const settingsEndpoints = {
     UPDATE_DISPLAY_PICTURE_API: BASE_URL + '/profile/updateDisplayPicture',
     UPDATE_PROFILE_API: BASE_URL + '/profile/updateProfile',

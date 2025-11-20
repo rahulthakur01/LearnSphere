@@ -10,7 +10,7 @@ const Dashboard = () => {
         </div>
        
       
-        <div className="min-h-[cal(100vh-3.5rem)]  w-full border border-green-800 mt-10">
+        <div className="min-h-[cal(100vh-3.5rem)]  w-full mt-10">
             <div className="text-richblack-50 w-10/12 max-w-[1000px] py-10 mx-auto ">
                 <Outlet/>
 

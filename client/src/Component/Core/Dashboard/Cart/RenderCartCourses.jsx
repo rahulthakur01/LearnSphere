@@ -1,6 +1,6 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import ReactStars from "react-rating-stars-component";
+// import ReactStars from "react-rating-stars-component";
 import {GiNinjaStar} from "react-icons/gi"
 import {RiDeleteBin6Line} from "react-icons/ri"
 

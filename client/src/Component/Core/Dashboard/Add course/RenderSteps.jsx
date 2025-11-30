@@ -37,7 +37,7 @@ const RenderSteps = () => {
 
             {/* Dashes Between Circles (except last circle) */}
             {index !== steps.length - 1 && (
-              <div className="w-60 border-t border-dashed border-richblack-600 mx-1"></div>
+              <div className="w-60 border-t border-dashed border-richblack-600 "></div>
             )}
             
           </div>

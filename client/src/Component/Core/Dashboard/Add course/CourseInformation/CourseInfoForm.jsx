@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useSelector, useDispatch } from "react-redux";
 import { setStep, setCourse } from "../../../../../Redux/slices/courseSlice";
-import { IconBtn } from "../../../../Common/IconBtn";
+import IconBtn from "../../../../Common/IconBtn";
 import {
   addCourseDetails,
   editCourseDetails,
@@ -103,6 +103,7 @@ const CourseInfoForm = () => {
 
     setLoading(true);
     const result = await addCourseDetails(formData, token);
+    setLoading(false)
     if (result) {
       setStep(2);
       dispatch(setCourse(result));

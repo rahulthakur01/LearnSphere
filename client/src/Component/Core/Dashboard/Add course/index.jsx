@@ -8,7 +8,7 @@ const AddCourses = () => {
           <h1 className="font-semibold leading-[26px] text-2xl">Add Course</h1>
           <RenderSteps/>
         </div>
-        <div className="flex flex-col border border-richblack-700 bg-richblack-800 p-6   rounded-[8px] mt-4">
+        <div className="flex flex-col border border-richblack-700 bg-richblack-800 p-6  max-h-[500px] rounded-[8px] mt-4">
           <p className="font-semibold leading-[26px] text-2xl my-4">Code Upload Tips</p>
           <ul className="flex flex-col gap-4 list-disc text-sm">
             <li>Set the Course Price option or make it free.</li>

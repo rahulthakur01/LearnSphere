@@ -24,5 +24,6 @@ export const settingsEndpoints = {
     DELETE_PROFILE_API: BASE_URL + '/profile/deleteProfile'
 }
 export const courseDetailsEndpoints = {
-    CREATE_COURSE_API: BASE_URL + '/course/createCourse'
+    CREATE_COURSE_API: BASE_URL + '/course/createCourse',
+    EDIT_COURSE_API: BASE_URL + 'course/editCourse'
 }

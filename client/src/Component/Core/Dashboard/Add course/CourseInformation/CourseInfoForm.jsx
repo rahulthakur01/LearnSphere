@@ -1,7 +1,18 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useSelector, useDispatch } from "react-redux";
+import { setStep, setCourse } from "../../../../../Redux/slices/courseSlice";
+import { IconBtn } from "../../../../Common/IconBtn";
+import {
+  addCourseDetails,
+  editCourseDetails,
+} from "../../../../../Services/oprations/courseAPI";
+import toast from "react-hot-toast";
+import RequirementField from "./RequirementField";
+
+
 const CourseInfoForm = () => {
+  const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
   const [courseCatgeory, setCourseCategory] = useState([]);
   const { course, editCourse } = useSelector((state) => state.course);
@@ -30,12 +41,71 @@ const CourseInfoForm = () => {
     }
   };
 
-  const handleFormSubmit = (data) => {
+  const handleFormSubmit = async (data) => {
     if (editCourse) {
       if (isFormUpdated()) {
         const currentValues = getValues();
         const formData = new FormData();
+
+        formData.append("courseId", course._id);
+        if (currentValues.courseTitle !== course.courseName) {
+          formData.append("courseName", data.courseTitle);
+        }
+
+        if (currentValues.courseShortDesc !== course.courseDescription) {
+          formData.append("courseDescription", data.courseShortDesc);
+        }
+
+        if (currentValues.coursePrice !== course.price) {
+          formData.append("price", data.coursePrice);
+        }
+
+        if (currentValues.courseBenefits !== course.whatYouWillLearn) {
+          formData.append("whatYouWillLearn", data.courseBenefits);
+        }
+
+        if (currentValues.courseCategory._id !== course.category._id) {
+          formData.append("category", data.courseCategory);
+        }
+
+        if (
+          currentValues.courseRequirements.toString() !==
+          course.instructions.toString()
+        ) {
+          formData.append(
+            "instructions",
+            JSON.stringify(data.courseRequirements)
+          );
+        }
+
+        setLoading(true);
+        const result = await editCourseDetails(formData, token);
+        setLoading(false);
+        if (result) {
+          setStep(2);
+          dispatch(setCourse(result));
+        } else {
+          toast.error("No changes till now");
+        }
       }
+      return;
+    }
+
+    // create new course
+    const formData = new FormData();
+    formData.append("coursName", data.courseName);
+    formData.append("courseShortDesc", data.courseShortDesc);
+    formData.append("price", data.coursePrice);
+    formData.append("whatYouWillLearn", data.benefitsOfCourse);
+    formData.append("category", data.courseCategory);
+    formData.append("instructions", JSON.stringify(data.courseRequirements));
+    formData.append("status", COURSE_STATUS.DRAFT);
+
+    setLoading(true);
+    const result = await addCourseDetails(formData, token);
+    if (result) {
+      setStep(2);
+      dispatch(setCourse(result));
     }
   };
 
@@ -157,6 +227,19 @@ const CourseInfoForm = () => {
               Benefits of the course are required**
             </span>
           )}
+        </div>
+        <div>
+          <RequirementField
+            name="courseRequirements"
+            label="Instructions"
+            register={register}
+            errors={errors}
+            setValue={setValue}
+            getValues = {getValues}
+          />
+        </div>
+        <div>
+          <IconBtn text={!editCourse ? "Next" : "Save changes"} />
         </div>
       </form>
     </>

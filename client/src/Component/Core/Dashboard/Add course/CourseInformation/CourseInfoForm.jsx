@@ -1,11 +1,13 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useSelector, useDispatch } from "react-redux";
 import { setStep, setCourse } from "../../../../../Redux/slices/courseSlice";
 import IconBtn from "../../../../Common/IconBtn";
+import { COURSE_STATUS } from "../../../../../utils/constant";
 import {
   addCourseDetails,
   editCourseDetails,
+  fetchCourseCategory
 } from "../../../../../Services/oprations/courseAPI";
 import toast from "react-hot-toast";
 import RequirementField from "./RequirementField";
@@ -24,6 +26,20 @@ const CourseInfoForm = () => {
     getValues,
     formState: { errors },
   } = useForm();
+
+  const getCategories = async () => {
+    setLoading(true);
+    const categories = await fetchCourseCategory();
+    if (categories.length > 0) {
+      setCourseCategory(categories);
+    }
+    setLoading(false);
+  }
+
+  useEffect(() => { 
+    getCategories();
+  },[])
+
 
   const isFormUpdated = () => {
     const currentValues = getValues();
@@ -69,8 +85,7 @@ const CourseInfoForm = () => {
         }
 
         if (
-          currentValues.courseRequirements.toString() !==
-          course.instructions.toString()
+          currentValues.courseRequirements.toString() !== course.instructions.toString()
         ) {
           formData.append(
             "instructions",
@@ -93,13 +108,19 @@ const CourseInfoForm = () => {
 
     // create new course
     const formData = new FormData();
-    formData.append("coursName", data.courseName);
-    formData.append("courseShortDesc", data.courseShortDesc);
+    formData.append("courseName", data.courseTitle);
+    formData.append("courseDescription", data.courseShortDesc);
     formData.append("price", data.coursePrice);
-    formData.append("whatYouWillLearn", data.benefitsOfCourse);
+    formData.append("whatYouWillLearn", data.courseBenefits);
     formData.append("category", data.courseCategory);
     formData.append("instructions", JSON.stringify(data.courseRequirements));
     formData.append("status", COURSE_STATUS.DRAFT);
+
+
+    for (let pair of formData.entries()) {
+      console.log(pair[0] + ": " + pair[1]);
+    }
+    console.log("FORMDATA...", formData);
 
     setLoading(true);
     const result = await addCourseDetails(formData, token);
@@ -160,19 +181,19 @@ const CourseInfoForm = () => {
           )}
         </div>
         <div className="flex flex-col gap-2 ">
-          <label htmlFor="price" className="text-richblack-5 text-[14px]">
+          <label htmlFor="coursePrice" className="text-richblack-5 text-[14px]">
             {" "}
             Price
             <sup className="text-pink-500">*</sup>
           </label>
           <input
-            id="price"
-            name="price"
+            id="coursePrice"
+            name="coursePrice"
             placeholder="Enter course price"
-            {...register("price", { required: true, valueAsNumber: true })}
+            {...register("coursePrice", { required: true, valueAsNumber: true })}
             className="bg-richblack-700 text-[16px] rounded-lg text-richblack-5 leading-[24px] shadow-[0_0_5x_0] placeholder:text-richblack-200 p-3 focus:outline-none border-b border-richblack-300 focus:border-yellow-500"
           />
-          {errors.price && (
+          {errors.coursePrice && (
             <span className="-mt-1 text-[12px] text-yellow-100">
               course price is required**
             </span>
@@ -208,7 +229,7 @@ const CourseInfoForm = () => {
         </div>
         <div className="flex flex-col gap-2 ">
           <label
-            htmlFor="benefitsOfCourse"
+            htmlFor="courseBenefits"
             className="text-richblack-5 text-[14px]"
           >
             Benefits of the course
@@ -216,14 +237,14 @@ const CourseInfoForm = () => {
           </label>
           <textarea
             type="text"
-            id="benefitsOfCourse"
+            id="courseBenefits"
             placeholder="Course Benefits"
-            {...register("benefitsOfCourse", { required: true })}
+            {...register("courseBenefits", { required: true })}
             cols={20}
             rows={5}
             className="bg-richblack-700 text-[16px] rounded-lg text-richblack-5 leading-[24px] shadow-[0_0_5x_0] placeholder:text-richblack-200 p-3 focus:outline-none border-b border-richblack-300 focus:border-yellow-500"
           />
-          {errors.benefitsOfCourse && (
+          {errors.courseBenefits && (
             <span className="-mt-1 text-[12px] text-yellow-100">
               Benefits of the course are required**
             </span>

@@ -4,6 +4,17 @@ const RequirementField = ({ name, label, register, setValue }) => {
   const [requirement, setRequirement] = useState("");
   const [requirementList, setRequirementList] = useState([]);
 
+
+  useEffect(() => { 
+    register(name, {
+      required:true,
+    })
+  },[])
+
+  useEffect(() => {
+    setValue(name, requirementList)
+  },[requirementList])
+
   const handleAddRequirement = () => {
     setRequirementList([...requirementList, requirement]);
   

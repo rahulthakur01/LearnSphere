@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { getUserEnrolledCourses } from "../../../Services/oprations/profileAPI";
-import { ProgressBar } from "@ramonak/react-progress-bar"
+// import { ProgressBar } from "@ramonak/react-progress-bar"
 import { useSelector } from "react-redux";
 
 const EnrolledCourses = () => {

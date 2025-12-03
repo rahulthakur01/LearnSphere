@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useSelector, useDispatch } from "react-redux";
 import { setStep, setCourse } from "../../../../../Redux/slices/courseSlice";
@@ -7,11 +7,10 @@ import { COURSE_STATUS } from "../../../../../utils/constant";
 import {
   addCourseDetails,
   editCourseDetails,
-  fetchCourseCategory
+  fetchCourseCategory,
 } from "../../../../../Services/oprations/courseAPI";
 import toast from "react-hot-toast";
 import RequirementField from "./RequirementField";
-
 
 const CourseInfoForm = () => {
   const dispatch = useDispatch();
@@ -34,12 +33,11 @@ const CourseInfoForm = () => {
       setCourseCategory(categories);
     }
     setLoading(false);
-  }
+  };
 
-  useEffect(() => { 
+  useEffect(() => {
     getCategories();
-  },[])
-
+  }, []);
 
   const isFormUpdated = () => {
     const currentValues = getValues();
@@ -48,7 +46,7 @@ const CourseInfoForm = () => {
       currentValues.courseShortDesc !== course.courseDescription ||
       currentValues.coursePrice !== course.price ||
       currentValues.courseTitle !== course.courseName ||
-      currentValues.benefitsOfCourse !== course.whatYouWillLearn ||
+      currentValues.courseBenefits !== course.whatYouWillLearn ||
       currentValues.courseCategory._id !== course.category._id
     ) {
       return true;
@@ -85,7 +83,8 @@ const CourseInfoForm = () => {
         }
 
         if (
-          currentValues.courseRequirements.toString() !== course.instructions.toString()
+          currentValues.courseRequirements.toString() !==
+          course.instructions.toString()
         ) {
           formData.append(
             "instructions",
@@ -116,17 +115,14 @@ const CourseInfoForm = () => {
     formData.append("instructions", JSON.stringify(data.courseRequirements));
     formData.append("status", COURSE_STATUS.DRAFT);
 
-
     for (let pair of formData.entries()) {
       console.log(pair[0] + ": " + pair[1]);
     }
-    console.log("FORMDATA...", formData);
-
     setLoading(true);
     const result = await addCourseDetails(formData, token);
-    setLoading(false)
+    setLoading(false);
     if (result) {
-      setStep(2);
+      dispatch(setStep(2));
       dispatch(setCourse(result));
     }
   };
@@ -190,7 +186,10 @@ const CourseInfoForm = () => {
             id="coursePrice"
             name="coursePrice"
             placeholder="Enter course price"
-            {...register("coursePrice", { required: true, valueAsNumber: true })}
+            {...register("coursePrice", {
+              required: true,
+              valueAsNumber: true,
+            })}
             className="bg-richblack-700 text-[16px] rounded-lg text-richblack-5 leading-[24px] shadow-[0_0_5x_0] placeholder:text-richblack-200 p-3 focus:outline-none border-b border-richblack-300 focus:border-yellow-500"
           />
           {errors.coursePrice && (
@@ -221,11 +220,12 @@ const CourseInfoForm = () => {
                 ))
             }
           </select>
-          {errors.courseCatgeory && (
+          {errors.courseCategory && (
             <span className="-mt-1 text-[12px] text-yellow-100">
               course category is required**
             </span>
           )}
+
         </div>
         <div className="flex flex-col gap-2 ">
           <label
@@ -250,6 +250,7 @@ const CourseInfoForm = () => {
             </span>
           )}
         </div>
+
         <div>
           <RequirementField
             name="courseRequirements"
@@ -257,13 +258,22 @@ const CourseInfoForm = () => {
             register={register}
             errors={errors}
             setValue={setValue}
-            getValues = {getValues}
+            getValues={getValues}
           />
         </div>
         <div>
+          {editCourse && (
+            <button
+              onClick={() => dispatch(step(2))}
+              className="flex items-center gap-x-2 bg-richblack-300"
+            >
+              continue without saving
+            </button>
+          )}
           <IconBtn text={!editCourse ? "Next" : "Save changes"} />
         </div>
       </form>
+   
     </>
   );
 };

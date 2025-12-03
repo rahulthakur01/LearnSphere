@@ -14,7 +14,7 @@ export const fetchCourseCategory = async ()=>{
         }
 
         result = response?.data?.data;
-        toast.success("successfully fetch course categories")
+        // toast.success("successfully fetch course categories")
 
     } catch (error) {
         console.log("COURESE CATEGORY API ERROR....", error);
@@ -25,7 +25,6 @@ export const fetchCourseCategory = async ()=>{
 
 export const addCourseDetails = async(data, token)=>{
     let result = null;
-    // console.log("Dataaaaa...", data);
     const toastId = toast.loading("Loading...");
     try{
         const response = await apiConnector("POST", CREATE_COURSE_API, data,{

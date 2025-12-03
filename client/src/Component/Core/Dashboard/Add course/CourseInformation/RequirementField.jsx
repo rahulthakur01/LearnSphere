@@ -39,6 +39,7 @@ const RequirementField = ({ name, label, register, setValue }) => {
             className="bg-richblack-700 text-[16px] rounded-lg text-richblack-5 leading-[24px] shadow-[0_0_5x_0] placeholder:text-richblack-200 p-3 focus:outline-none border-b border-richblack-300 focus:border-yellow-500"
           />
           <button
+          type='button'
             className="text-yellow-50 w-fit"
             onClick={handleAddRequirement}
           >
@@ -50,7 +51,7 @@ const RequirementField = ({ name, label, register, setValue }) => {
             {requirementList.map((require, index) => (
               <li key={index} className="flex items-center gap-1 ">
                 <span className="text-richblack-5"> {require}</span>
-                <button onClick={() => handleRemoveRequirement(index)} className="text-richblack-200 cursor-pointer">
+                <button  onClick={() => handleRemoveRequirement(index)} className="text-richblack-200 cursor-pointer">
                   clear
                 </button>
               </li>

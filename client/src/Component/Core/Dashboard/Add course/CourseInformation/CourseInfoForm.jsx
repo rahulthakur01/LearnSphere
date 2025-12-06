@@ -11,7 +11,8 @@ import {
 } from "../../../../../Services/oprations/courseAPI";
 import toast from "react-hot-toast";
 import RequirementField from "./RequirementField";
-
+import ChipInputs
+ from "./ChipInputs";
 const CourseInfoForm = () => {
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
@@ -133,6 +134,7 @@ const CourseInfoForm = () => {
         onSubmit={handleSubmit(handleFormSubmit)}
         className=" rounded-[8px] bg-richblack-800 p-6 flex flex-col gap-6"
       >
+      {/* Course Title */}
         <div className="flex flex-col gap-2 ">
           <label htmlFor="courseTitle" className="text-richblack-5 text-[14px]">
             {" "}
@@ -153,6 +155,7 @@ const CourseInfoForm = () => {
             </span>
           )}
         </div>
+        {/* Course Description */}
         <div className="flex flex-col gap-2 ">
           <label
             htmlFor="courseShortDesc"
@@ -176,6 +179,7 @@ const CourseInfoForm = () => {
             </span>
           )}
         </div>
+        {/* Course Price */}
         <div className="flex flex-col gap-2 ">
           <label htmlFor="coursePrice" className="text-richblack-5 text-[14px]">
             {" "}
@@ -198,7 +202,7 @@ const CourseInfoForm = () => {
             </span>
           )}
         </div>
-
+          {/* Course Category */}
         <div className="flex flex-col gap-2">
           <label htmlFor="courseCategory">Course Category</label>
           <select
@@ -227,6 +231,21 @@ const CourseInfoForm = () => {
           )}
 
         </div>
+          {/* Course Tags */}
+          <ChipInputs
+           label="Tags"
+           name="courseTags"
+           placeholder="Enter tag and press enter"
+           errors={errors}
+           register={register}
+           setValue={setValue}
+           getValues={getValues}
+          />
+
+          {/* Course Thumbnail */}
+          
+
+        {/* Course Benefits */}
         <div className="flex flex-col gap-2 ">
           <label
             htmlFor="courseBenefits"
@@ -250,7 +269,7 @@ const CourseInfoForm = () => {
             </span>
           )}
         </div>
-
+         {/* Course Requiremet */}
         <div>
           <RequirementField
             name="courseRequirements"
@@ -261,6 +280,7 @@ const CourseInfoForm = () => {
             getValues={getValues}
           />
         </div>
+        {/* button */}
         <div>
           {editCourse && (
             <button

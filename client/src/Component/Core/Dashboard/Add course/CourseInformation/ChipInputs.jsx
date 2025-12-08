@@ -10,7 +10,7 @@ const ChipInputs = ({label, name, placeholder, errors, register, setValue, getVa
     useEffect(()=>{
         // Edit mode me purane chips load karna
         if(editCourse){
-            setChips(course?.tags);
+            setChips(course?.tag);
         }
         register(name, {required:true, validate:(value)=> value.length > 0})
     },[])

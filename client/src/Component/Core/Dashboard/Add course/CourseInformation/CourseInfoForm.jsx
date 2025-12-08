@@ -4,28 +4,20 @@ import { useSelector, useDispatch } from "react-redux";
 import { setStep, setCourse } from "../../../../../Redux/slices/courseSlice";
 import IconBtn from "../../../../Common/IconBtn";
 import { COURSE_STATUS } from "../../../../../utils/constant";
-import {
-  addCourseDetails,
-  editCourseDetails,
-  fetchCourseCategory,
-} from "../../../../../Services/oprations/courseAPI";
+import { addCourseDetails, editCourseDetails, fetchCourseCategory} from "../../../../../Services/oprations/courseAPI";
 import toast from "react-hot-toast";
 import RequirementField from "./RequirementField";
 import ChipInputs from "./ChipInputs";
 import Upload from "../Upload";
+
+
 const CourseInfoForm = () => {
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
   const [courseCatgeory, setCourseCategory] = useState([]);
   const { course, editCourse } = useSelector((state) => state.course);
   const { token } = useSelector((state) => state.auth);
-  const {
-    register,
-    handleSubmit,
-    setValue,
-    getValues,
-    formState: { errors },
-  } = useForm();
+  const { register, handleSubmit, setValue, getValues, formState: { errors } } = useForm();
 
   const getCategories = async () => {
     setLoading(true);
@@ -37,6 +29,22 @@ const CourseInfoForm = () => {
   };
 
   useEffect(() => {
+
+    if(editCourse){
+      setValue("courseTitle", course.courseName);
+      setValue("courseShortDesc", course.courseDescription)
+      setValue("coursePrice", course.price)
+      setValue("courseTags", course.tag)
+      setValue("courseBenefits", course.whatYouWillLearn)
+      setValue("courseCategory", course.category?._id)
+      // setValue("courseRequirements", course.instructions)
+      setValue("courseRequirements",  [...course.instructions])
+
+     
+      setValue("courseThumbnail", course.thumbnail)
+    }
+
+
     getCategories();
   }, []);
 
@@ -46,10 +54,11 @@ const CourseInfoForm = () => {
       currentValues.courseTitle !== course.courseName ||
       currentValues.courseShortDesc !== course.courseDescription ||
       currentValues.coursePrice !== course.price ||
-      currentValues.courseTitle !== course.courseName ||
+      currentValues.courseTags.toString() !== course.tag.toString() ||
+      currentValues.courseThumbnail !== course.thumbnail||  
       currentValues.courseBenefits !== course.whatYouWillLearn ||
-      currentValues.courseCategory._id !== course.category._id
-    ) {
+      currentValues.courseCategory._id !== course.category._id||
+      currentValues.courseRequirements.toString() !== course.instructions.toString()   ) {
       return true;
     } else {
       return false;
@@ -74,7 +83,13 @@ const CourseInfoForm = () => {
         if (currentValues.coursePrice !== course.price) {
           formData.append("price", data.coursePrice);
         }
-
+        if(currentValues.courseTags.toString() !== course.tag.toString()){
+          formData.append("tag", JSON.stringify(data.courseTags))
+        }
+        if (currentValues.courseThumbnail !== course.thumbnail) {
+          formData.append("thumbnailImage", data.courseThumbnail);
+        }
+        
         if (currentValues.courseBenefits !== course.whatYouWillLearn) {
           formData.append("whatYouWillLearn", data.courseBenefits);
         }
@@ -111,10 +126,11 @@ const CourseInfoForm = () => {
     formData.append("courseName", data.courseTitle);
     formData.append("courseDescription", data.courseShortDesc);
     formData.append("price", data.coursePrice);
+    formData.append("tag", JSON.stringify(data.courseTags))
     formData.append("whatYouWillLearn", data.courseBenefits);
     formData.append("category", data.courseCategory);
     formData.append("instructions", JSON.stringify(data.courseRequirements));
-    formData.append("thumbnail", data.courseThumbnail)
+    formData.append("thumbnailImage", data.courseThumbnail)
     formData.append("status", COURSE_STATUS.DRAFT);
 
     for (let pair of formData.entries()) {
@@ -208,7 +224,7 @@ const CourseInfoForm = () => {
           <label htmlFor="courseCategory">Course Category</label>
           <select
             id="courseCategory"
-            placeholder="choose a category"
+            defaultValue=""
             {...register("courseCategory", { required: true })}
             className="bg-richblack-700 text-[16px] rounded-lg text-richblack-5 leading-[24px] shadow-[0_0_5x_0] placeholder:text-richblack-200 p-3 focus:outline-none border-b border-richblack-300 focus:border-yellow-500"
           >
@@ -288,11 +304,11 @@ const CourseInfoForm = () => {
           />
         </div>
         {/* button */}
-        <div>
+        <div className="flex items-center gap-4 justify-end">
           {editCourse && (
             <button
-              onClick={() => dispatch(step(2))}
-              className="flex items-center gap-x-2 bg-richblack-300"
+              onClick={() => dispatch(setStep(2))}
+              className="flex items-center gap-x-2 bg-richblack-300 px-6 py-2 rounded-md text-richblack-5"
             >
               continue without saving
             </button>

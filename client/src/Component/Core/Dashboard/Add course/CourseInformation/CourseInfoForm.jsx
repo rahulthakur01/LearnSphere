@@ -114,6 +114,7 @@ const CourseInfoForm = () => {
     formData.append("whatYouWillLearn", data.courseBenefits);
     formData.append("category", data.courseCategory);
     formData.append("instructions", JSON.stringify(data.courseRequirements));
+    formData.append("thumbnail", data.courseThumbnail)
     formData.append("status", COURSE_STATUS.DRAFT);
 
     for (let pair of formData.entries()) {
@@ -243,8 +244,8 @@ const CourseInfoForm = () => {
 
         {/* Course Thumbnail */}
         <Upload
-          label="courseThumbnail"
-          name="Course Thumbnail"
+          label="Course Thumbnail"
+          name="courseThumbnail"
           register={register}
           errors={errors}
           setValue={setValue}

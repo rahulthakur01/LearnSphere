@@ -36,7 +36,7 @@ const Upload = ({
       previewFile(file);
       setSelectedFile(file);
     }
-  };
+   };
 
   const { getRootProps, getInputProps, open } = useDropzone({
     accept: !video

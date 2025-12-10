@@ -133,9 +133,9 @@ const CourseInfoForm = () => {
     formData.append("thumbnailImage", data.courseThumbnail)
     formData.append("status", COURSE_STATUS.DRAFT);
 
-    for (let pair of formData.entries()) {
-      console.log(pair[0] + ": " + pair[1]);
-    }
+    // for (let pair of formData.entries()) {
+    //   console.log(pair[0] + ": " + pair[1]);
+    // }
     setLoading(true);
     const result = await addCourseDetails(formData, token);
     setLoading(false);

@@ -26,5 +26,8 @@ export const settingsEndpoints = {
 export const courseDetailsEndpoints = {
     CREATE_COURSE_API: BASE_URL + '/course/createCourse',
     EDIT_COURSE_API: BASE_URL + '/course/editCourse',
-    COURSE_CATEGORY_API: BASE_URL + '/course/showAllCategories'
+    COURSE_CATEGORY_API: BASE_URL + '/course/showAllCategories',
+    CREATE_SECTION_API : BASE_URL + '/course/addSection',
+    UPDATE_SECTION_API: BASE_URL + '/course/updateSection',
+    DELETE_SECTION_API: BASE_URL + '/course/deleteSection'
 }

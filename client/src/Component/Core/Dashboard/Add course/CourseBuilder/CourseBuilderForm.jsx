@@ -6,7 +6,9 @@ import { MdOutlineDeleteForever } from "react-icons/md";
 import { FaCaretDown } from "react-icons/fa";
 import { IoMdArrowDropright } from "react-icons/io";
 import { MdEdit } from "react-icons/md";
-import { setStep, setEditCourse } from "../../../../../Redux/slices/courseSlice";
+
+import { setStep, setEditCourse, setCourse } from "../../../../../Redux/slices/courseSlice";
+import { createSection, updateSection } from "../../../../../Services/oprations/courseAPI";
 import { useDispatch, useSelector } from "react-redux";
 import toast from "react-hot-toast";
 import NestedView from "./NestedView";
@@ -14,11 +16,35 @@ import NestedView from "./NestedView";
 const CourseBuilderForm = () => {
   const { register, handleSubmit, formState: { errors }, setValue} = useForm();
   const {course, editCourse} = useSelector((state)=>state.course)
-  const [editSectionName, setEditSectionName] = useState(true);
+  const {token} = useSelector((state)=>state.auth)
+  const [editSectionName, setEditSectionName] = useState(null);
   const dispatch = useDispatch();
-
+  const [loading, setLoading] = useState(false);
   // onSumbit
-  const onSubmit = () => {};
+  const onSubmit = async(data) => {
+    
+    setLoading(true);
+    let result;
+    if(editSectionName){
+      result = await updateSection({
+         sectionName: data.sectionName,
+         sectionId: editSectionName,
+         courseId : course._id
+      }, token)
+    }else{
+      result = await createSection({
+        sectionName: data.sectionName,
+        courseId :course._id
+      }, token)
+    }
+    if(result){
+      dispatch(setCourse(result));
+      setEditSectionName(null);
+      setValue("sectionName", "");
+    }
+    setLoading(false);
+  };
+
   //  Cancel Edit
   const cancelEdit = () => {
     setEditSectionName(null)
@@ -44,6 +70,20 @@ const CourseBuilderForm = () => {
     }
     setStep(3)
   };
+
+  const hanldeChangeEditSectionName = (sectionId, sectionName)=>{
+
+    if(editSectionName === sectionId){
+      cancelEdit();
+      return;
+    }
+
+    setEditSectionName(sectionId);
+    setValue("sectionName", sectionName);
+
+  }
+  
+
   return (
     <>
       <div>
@@ -70,7 +110,7 @@ const CourseBuilderForm = () => {
             )}
             {/* button */}
             <div className="mt-6">
-              <IconBtn
+              <IconBtn type='Submit'
                 text={editSectionName ? "Edit Section Name" : "Course Name"}
                 customClass={" text-white-200 border "}
               >
@@ -88,10 +128,14 @@ const CourseBuilderForm = () => {
               )}
             </div>
           </form>
-            
+
             {/* Course Section */}
           <div>
-              <NestedView  />
+              {
+                course?.courseContent?.length > 0 && (
+                  <NestedView  hanldeChangeEditSectionName={hanldeChangeEditSectionName}/>
+                )
+              }
           </div>
 
           {/* bottom buton */}

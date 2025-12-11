@@ -260,7 +260,6 @@ const CourseInfoForm = () => {
         <Upload
           label="Course Thumbnail"
           name="courseThumbnail"
-      
           register={register}
           errors={errors}
           setValue={setValue}

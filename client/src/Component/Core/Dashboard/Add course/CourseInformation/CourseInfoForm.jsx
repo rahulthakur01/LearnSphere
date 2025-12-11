@@ -133,9 +133,7 @@ const CourseInfoForm = () => {
     formData.append("thumbnailImage", data.courseThumbnail)
     formData.append("status", COURSE_STATUS.DRAFT);
 
-    // for (let pair of formData.entries()) {
-    //   console.log(pair[0] + ": " + pair[1]);
-    // }
+   
     setLoading(true);
     const result = await addCourseDetails(formData, token);
     setLoading(false);
@@ -262,6 +260,7 @@ const CourseInfoForm = () => {
         <Upload
           label="Course Thumbnail"
           name="courseThumbnail"
+      
           register={register}
           errors={errors}
           setValue={setValue}

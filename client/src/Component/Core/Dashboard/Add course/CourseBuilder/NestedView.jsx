@@ -5,8 +5,9 @@ import { MdOutlineDeleteForever } from "react-icons/md";
 import { MdEdit } from "react-icons/md";
 import { IoAddCircleOutline } from "react-icons/io5";
 import ConfirmationModal from "../../../../Common/ConfirmationModal";
-
+import { deleteSection } from "../../../../../Services/oprations/courseAPI";
 import { useSelector, useDispatch } from "react-redux";
+import { setCourse } from "../../../../../Redux/slices/courseSlice";
 
 const NestedView = ({ hanldeChangeEditSectionName }) => {
 
@@ -14,8 +15,15 @@ const NestedView = ({ hanldeChangeEditSectionName }) => {
   const dispatch = useDispatch();
   const [confirmationModal, setConfiratonModal] = useState(null)
 
-  const handleDeleteSection=()=>{
-
+  const handleDeleteSection= async(sectionId)=>{
+      const result = await deleteSection({
+        sectionId,
+        courseId: course._id
+      }, token)
+    if(result){
+      dispatch(setCourse(result));
+    }
+    setConfiratonModal(null)
   }
 
   return (
@@ -37,8 +45,8 @@ const NestedView = ({ hanldeChangeEditSectionName }) => {
               <button onClick={ ()=>setConfiratonModal({
                 text1:"Delete this section",
                 text2:"All lectures will be deleted in this section",
-                btn1:"Delete",
-                btn2:"Cancel",
+                btnText1:"Delete",
+                btnText2:"Cancel",
                 btn1Handler: ()=> handleDeleteSection(section._id),
                 btn2Handler: () => setConfiratonModal(null),
               })}>
@@ -83,7 +91,11 @@ const NestedView = ({ hanldeChangeEditSectionName }) => {
         ))
       }
 
-       
+       {
+        confirmationModal && (
+          <ConfirmationModal modalData={confirmationModal}/>
+        )
+       }
         
       </div>
     </>

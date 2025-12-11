@@ -7,7 +7,7 @@ export const fetchCourseCategory = async ()=>{
     let result = [];
     try {
         const response = await apiConnector("GET", COURSE_CATEGORY_API);
-        console.log("COURSE_CATEGORIES_API API RESPONSE............", response)
+        // console.log("COURSE_CATEGORIES_API API RESPONSE............", response)
 
         if (!response?.data?.success) {
             throw new Error("Could not fetch course categories")
@@ -22,7 +22,7 @@ export const fetchCourseCategory = async ()=>{
     }
     return result;
 }
-
+    // Add course details
 export const addCourseDetails = async(data, token)=>{
     let result = null;
     const toastId = toast.loading("Loading...");
@@ -46,13 +46,14 @@ export const addCourseDetails = async(data, token)=>{
     return result;
 
 }
-
+    // Edit Course details
 export const editCourseDetails =async (data, token)=>{
 
     let result = null;
     const toastId = toast.loading("Loading...");
     try{
         const response = await apiConnector("POST", EDIT_COURSE_API, data, {
+            "Content-Type": "multipart/form-data",
             Authorization: `Bearer ${ token}`
         })
        console.log('EDIT COURSE API RESPONSE....', response);
@@ -116,3 +117,26 @@ export const updateSection = async(data, token)=>{
     return result;
 
 }
+    // Delete Section
+export const deleteSection = async(data, token)=>{
+    let result = null;
+    const toastId = toast.loading("Loading...");
+    try{
+        const response = await apiConnector("POST", DELETE_SECTION_API, data, {
+            Authorization: `Bearer ${token}`
+        })
+        console.log("DELETE SECTION API RESPONSE......", response);
+        if(!response?.data?.success){
+            throw new Error ("Could not delete section")
+        }
+        toast.success("Section deleted Successfully")
+        result = response?.data?.data;
+    }catch (error) {
+        console.log("DELETE SECTION API ERROR............", error)
+        toast.error(error.message)
+      }
+      toast.dismiss(toastId)
+      return result
+}
+
+    // Create SubSection

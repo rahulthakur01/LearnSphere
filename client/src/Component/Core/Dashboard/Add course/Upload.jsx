@@ -31,7 +31,7 @@ const Upload = ({
 
   // Dropzone Config
   const { getRootProps, getInputProps, open } = useDropzone({
-    accept: video ? { "video/*": ["mp4"] } : { "image/*": [".jpeg", ".jpg", ".png"] },
+    accept: video ? { "video/*": [".mp4"] } : { "image/*": [".jpeg", ".jpg", ".png"] },
     multiple: false,
     onDrop: (acceptedFiles) => {
       console.log("DROPZONE FILES:", acceptedFiles);

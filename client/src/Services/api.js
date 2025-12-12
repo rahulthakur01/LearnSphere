@@ -29,5 +29,7 @@ export const courseDetailsEndpoints = {
     COURSE_CATEGORY_API: BASE_URL + '/course/showAllCategories',
     CREATE_SECTION_API : BASE_URL + '/course/addSection',
     UPDATE_SECTION_API: BASE_URL + '/course/updateSection',
-    DELETE_SECTION_API: BASE_URL + '/course/deleteSection'
+    DELETE_SECTION_API: BASE_URL + '/course/deleteSection',
+    CREATE_SUBSECTION_API: BASE_URL + '/course/addSubSection',
+    UPDATE_SUBSECTION_API: BASE_URL + '/course/updateSubSection'
 }

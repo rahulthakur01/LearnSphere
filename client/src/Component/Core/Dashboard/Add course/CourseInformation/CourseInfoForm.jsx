@@ -262,6 +262,7 @@ const CourseInfoForm = () => {
           name="courseThumbnail"
           register={register}
           errors={errors}
+          // video={true}
           setValue={setValue}
           editData = {editCourse ? course?.thumbnail : null}
         />

@@ -26,12 +26,14 @@ const CourseBuilderForm = () => {
     setLoading(true);
     let result;
     if(editSectionName){
+  // Update Section
       result = await updateSection({
          sectionName: data.sectionName,
          sectionId: editSectionName,
          courseId : course._id
       }, token)
     }else{
+  // Create Section
       result = await createSection({
         sectionName: data.sectionName,
         courseId :course._id

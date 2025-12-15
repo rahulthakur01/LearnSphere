@@ -12,6 +12,7 @@ import SubSectionModal from "./SubSectionModal";
 
 const NestedView = ({ hanldeChangeEditSectionName }) => {
   const { course } = useSelector((state) => state.course);
+  const {token} = useSelector((state)=>state.auth)
   const dispatch = useDispatch();
   const [confirmationModal, setConfiratonModal] = useState(null);
 
@@ -27,8 +28,13 @@ const NestedView = ({ hanldeChangeEditSectionName }) => {
       },
       token
     );
+
     if (result) {
-      dispatch(setCourse(result));
+      const updatedCourseContent = course.courseContent.map((section)=>(
+        section._id === modalData.sectionId ? result : section
+      ))
+      const updatedCourse = {...course, courseContent: updatedCourseContent}      
+      dispatch(setCourse(updatedCourse));
     }
     setConfiratonModal(null);
   };
@@ -78,7 +84,7 @@ const NestedView = ({ hanldeChangeEditSectionName }) => {
 
             <div>
               {section?.subSection?.map((subsection) => (
-                <div className="flex items-center justify-between gap-x-3 border-b-2 ml-5">
+                <div key={subsection._id} className="flex items-center justify-between gap-x-3 border-b-2 ml-5">
                   <div className="flex gap-2 items-center ">
                     <RxDropdownMenu />
                     <h2>{subsection.title}</h2>
@@ -95,7 +101,7 @@ const NestedView = ({ hanldeChangeEditSectionName }) => {
               ))}
               <button
                 className="flex gap-2 items-center my-4 text-yellow-50"
-                onClick={() => setAddSubSection(section._id)}
+                onClick={() => setAddSubSection({sectionId:section._id})}
               >
                 <IoAddCircleOutline fontSize={22} />
                 <span>Add Course</span>

@@ -47,7 +47,7 @@ const SubSectionModal = ({
       return false;
     }
   };
-
+  // Edit Sub Section
   const handleEditSubSection = async() => {
     const currentValues = getValues();
     const formData = new FormData();
@@ -79,6 +79,8 @@ const SubSectionModal = ({
   };
 
   const handleOnSubmit = async(data) => {
+    console.log("MODAL DATA 👉", modalData);
+    console.log("SECTION ID 👉", modalData?.sectionId);
     if (view) {
       return;
     }
@@ -100,10 +102,13 @@ const SubSectionModal = ({
     setLoading(true);
     //API CALL
     const result = await createSubSection(formData, token);
-
+    console.log("RESULT..........", result)
     if(result) {
-        //TODO: check for updation
-        dispatch(setCourse(result))
+       const updatedCourseContent = course.courseContent.map((section)=>(
+        section._id === modalData.sectionId ? result : section
+       ))
+       const updatedCourse = {...course, courseContent: updatedCourseContent}
+        dispatch(setCourse(updatedCourse))
     }
     setModalData(null);
     setLoading(false);

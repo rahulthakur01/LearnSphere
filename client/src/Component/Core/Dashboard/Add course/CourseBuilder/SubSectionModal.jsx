@@ -52,8 +52,11 @@ const SubSectionModal = ({
     const currentValues = getValues();
     const formData = new FormData();
 
-    formData.append("sectionId", modalData.section._id);
+    formData.append("sectionId", modalData.sectionId);
     formData.append("subSectionId", modalData._id);
+    // console.log("ModalDAta.section...........", modalData.sectionId)
+    // console.log(" modalData._id...........",  modalData._id)
+
 
     if (currentValues.lectureTitle !== modalData.title) {
       formData.append("title", currentValues.lectureTitle);
@@ -71,7 +74,11 @@ const SubSectionModal = ({
 
     const result = await updateSubSection(formData, token);
     if(result){
-     dispatch(setCourse(result))
+      const updatedCourseContent = course?.courseContent.map((section)=>(
+        section._id === modalData.sectionId ? result: section
+      ))
+      const updatedCourse = {...course, courseContent: updatedCourseContent}
+     dispatch(setCourse(updatedCourse))
     }
     setModalData(null);
     setLoading(false);
@@ -85,7 +92,7 @@ const SubSectionModal = ({
       return;
     }
     if (edit) {
-      if (!isFormUpdated) {
+      if (!isFormUpdated()) {
         toast.error("Avi kuch change nahi hua hai.");
       } else {
         handleEditSubSection();
@@ -115,10 +122,11 @@ const SubSectionModal = ({
   };
 
   return (
-    <>
-      <div>
+    
+    <div className="fixed inset-0 bg-slate-800/50 bg-opacity-10 backdrop-blur-sm grid place-items-center overflow-auto z-[1000] !mt-0">
+      <div className="my-10 w-11/12 max-w-[700px] rounded-lg border border-richblack-400 bg-richblack-800">
         <div className="flex justify-between items-center px-2 py-6">
-          <p>
+          <p className="text-xl font-semibold text-richblack-5">
             {add && "Adding"} {view && "viewing"}
             {edit && "Editing"} Lecture
           </p>
@@ -128,11 +136,11 @@ const SubSectionModal = ({
               (!loading ? setModalData(null) : <span> kuch mat dikho </span>)
             }
           >
-            <RxCross2 />
+            <RxCross2 fontSize={22}/>
           </button>
          
         </div>
-        <form onSubmit={handleSubmit(handleOnSubmit)}>
+        <form onSubmit={handleSubmit(handleOnSubmit)} className="space-y-8 px-8 py-10">
             <Upload
               label="Lecture Video"
               name="lectureVideo"
@@ -144,24 +152,31 @@ const SubSectionModal = ({
               editData={edit ? modalData.videoUrl : null}
             />
 
-            <div>
-              <label htmlFor="lectureTitle">Lecture Title</label>
+            <div className="flex flex-col gap-2 ">
+            <label htmlFor="lectureTitle" className="text-richblack-5 text-[14px]">
+            {" "}
+            Course Title
+            <sup className="text-pink-500">*</sup>
+          </label>
               <input
                 id="lectureTitle"
                 name="lectureTitle"
                 {...register("lectureTitle", { required: true })}
+                className="bg-richblack-700 text-[16px] rounded-lg text-richblack-5 leading-[24px] shadow-[0_0_5x_0] placeholder:text-richblack-200 p-3 focus:outline-none"
+
               />
-              {errors.lectureTitle && <span>Lecture title is required**</span>}
+              {errors.lectureTitle && <span className="text-yellow-50 text-xs tracking-wide">Lecture title is required**</span>}
             </div>
-            <div>
-              <label htmlFor="lectureDesc">Lecture Description</label>
-              <input
+            <div className="flex flex-col gap-2 ">
+              <label htmlFor="lectureDesc" className="text-richblack-5 text-[14px]">Lecture Description</label>
+              <textarea
                 id="lectureDesc"
                 name="lectureDesc"
                 {...register("lectureDesc", { required: true })}
+                className="bg-richblack-700 text-[16px] rounded-lg text-richblack-5 leading-[24px] shadow-[0_0_5x_0] placeholder:text-richblack-200 p-3 focus:outline-none"
               />
               {errors.lectureDesc && (
-                <span>Lecture Description is required**</span>
+                <span className="text-yellow-50 text-xs tracking-wide">Lecture Description is required**</span>
               )}
             </div>
             {
@@ -173,7 +188,7 @@ const SubSectionModal = ({
             }
           </form>
       </div>
-    </>
+    </div>
   );
 };
 

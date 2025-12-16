@@ -28,16 +28,22 @@ const NestedView = ({ hanldeChangeEditSectionName }) => {
       },
       token
     );
+    if(result){
+      dispatch(setCourse(result));
 
-    if (result) {
-      const updatedCourseContent = course.courseContent.map((section)=>(
-        section._id === modalData.sectionId ? result : section
-      ))
-      const updatedCourse = {...course, courseContent: updatedCourseContent}      
-      dispatch(setCourse(updatedCourse));
     }
-    setConfiratonModal(null);
+    setConfiratonModal(null)
+  
   };
+
+  // if (result) {
+  //   const updatedCourseContent = course.courseContent.map((section)=>(
+  //     section._id === modalData.sectionId ? result : section
+  //   ))
+  //   const updatedCourse = {...course, courseContent: updatedCourseContent}      
+  //   dispatch(setCourse(updatedCourse));
+  // }
+  // setConfiratonModal(null);
 
   return (
     <>
@@ -84,13 +90,15 @@ const NestedView = ({ hanldeChangeEditSectionName }) => {
 
             <div>
               {section?.subSection?.map((subsection) => (
+                
                 <div key={subsection._id} className="flex items-center justify-between gap-x-3 border-b-2 ml-5">
+               
                   <div className="flex gap-2 items-center ">
                     <RxDropdownMenu />
                     <h2>{subsection.title}</h2>
                   </div>
                   <div className="flex gap-2 items-center ">
-                    <button>
+                    <button onClick={()=>setEditSubSection({...subsection, sectionId: section._id})}>
                       <MdEdit fontSize={20} />
                     </button>
                     <button>
@@ -106,6 +114,7 @@ const NestedView = ({ hanldeChangeEditSectionName }) => {
                 <IoAddCircleOutline fontSize={22} />
                 <span>Add Course</span>
               </button>
+              
             </div>
           </details>
         ))}

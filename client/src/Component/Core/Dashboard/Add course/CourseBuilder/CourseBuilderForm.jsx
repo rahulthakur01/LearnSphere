@@ -70,7 +70,7 @@ const CourseBuilderForm = () => {
       toast.error("Add atleat one SubSection in section");
       return;
     }
-    setStep(3)
+    dispatch(setStep(3))
   };
 
   const hanldeChangeEditSectionName = (sectionId, sectionName)=>{

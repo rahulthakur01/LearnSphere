@@ -5,7 +5,7 @@ import { MdOutlineDeleteForever } from "react-icons/md";
 import { MdEdit } from "react-icons/md";
 import { IoAddCircleOutline } from "react-icons/io5";
 import ConfirmationModal from "../../../../Common/ConfirmationModal";
-import { deleteSection } from "../../../../../Services/oprations/courseAPI";
+import { deleteSection, deleteSubSection } from "../../../../../Services/oprations/courseAPI";
 import { useSelector, useDispatch } from "react-redux";
 import { setCourse } from "../../../../../Redux/slices/courseSlice";
 import SubSectionModal from "./SubSectionModal";
@@ -36,14 +36,28 @@ const NestedView = ({ hanldeChangeEditSectionName }) => {
   
   };
 
-  // if (result) {
-  //   const updatedCourseContent = course.courseContent.map((section)=>(
-  //     section._id === modalData.sectionId ? result : section
-  //   ))
-  //   const updatedCourse = {...course, courseContent: updatedCourseContent}      
-  //   dispatch(setCourse(updatedCourse));
-  // }
-  // setConfiratonModal(null);
+  const handleDeleteSubSection = async (subSectionId, sectionId)=>{
+
+      const result = await deleteSubSection({
+      subSectionId,
+      sectionId,
+
+      }, token)
+
+      console.log("Deleted Sub Section Response: ", result);
+
+      if (result) {
+        const updatedCourseContent = course.courseContent.map((section)=>(
+          section._id === sectionId ? result : section
+        ))
+        console.log("Updated Course Content:", updatedCourseContent);
+
+        const updatedCourse = {...course, courseContent: updatedCourseContent}      
+        dispatch(setCourse(updatedCourse));
+      }
+      setConfiratonModal(null);
+  }
+  
 
   return (
     <>
@@ -101,7 +115,14 @@ const NestedView = ({ hanldeChangeEditSectionName }) => {
                     <button onClick={()=>setEditSubSection({...subsection, sectionId: section._id})}>
                       <MdEdit fontSize={20} />
                     </button>
-                    <button>
+                    <button onClick={()=>setConfiratonModal({
+                        text1:"Delete this Sub-Section ?",
+                        text2:"This lecture will be deleted",
+                        btnText1:"Delete",
+                        btnText2:"Cancel",
+                        btn1Handler: ()=> handleDeleteSubSection(subsection._id, section._id),
+                        btn2Handler: ()=> setConfiratonModal(null)
+                    })}>
                       <MdOutlineDeleteForever fontSize={20} />
                     </button>
                   </div>

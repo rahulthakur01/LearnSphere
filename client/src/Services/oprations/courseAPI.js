@@ -8,7 +8,8 @@ const {
   UPDATE_SECTION_API,
   DELETE_SECTION_API,
   CREATE_SUBSECTION_API,
-  UPDATE_SUBSECTION_API
+  UPDATE_SUBSECTION_API,
+  DELETE_SUBSECTION_API,
 } = courseDetailsEndpoints;
 import toast from "react-hot-toast";
 
@@ -181,3 +182,33 @@ export const updateSubSection = async (data, token) => {
   toast.dismiss(toastId);
   return result;
 };
+
+// delete a subsection
+export const deleteSubSection = async (data, token) => {
+  let result = null
+  const toastId = toast.loading("Loading...")
+
+  try {
+    const response = await apiConnector(
+      "POST",
+      DELETE_SUBSECTION_API,
+      data,
+      {
+        Authorization: `Bearer ${token}`,
+      }
+    )
+
+    if (!response?.data?.success) {
+      throw new Error("Could Not Delete Lecture")
+    }
+
+    toast.success("Lecture Deleted")
+    result = response?.data?.data   // updatedSection
+  } catch (error) {
+    console.log("DELETE SUB-SECTION API ERROR............", error)
+    toast.error(error.message)
+  }
+
+  toast.dismiss(toastId)
+  return result
+}

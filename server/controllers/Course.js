@@ -120,6 +120,14 @@ exports.createCourse = async (req, res) => {
 	}
 };
 
+exports.editCourse = async (req, res)=>{
+	try{
+
+	}catch(error){
+		
+	}
+}
+
 exports.getAllCourses = async (req, res) => {
 	try {
 		const allCourses = await Course.find(

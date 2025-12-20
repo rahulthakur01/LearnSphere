@@ -10,6 +10,7 @@ const {
   CREATE_SUBSECTION_API,
   UPDATE_SUBSECTION_API,
   DELETE_SUBSECTION_API,
+  GET_ALL_INSTRUCTOR_COURSES_API
 } = courseDetailsEndpoints;
 import toast from "react-hot-toast";
 
@@ -211,4 +212,28 @@ export const deleteSubSection = async (data, token) => {
 
   toast.dismiss(toastId)
   return result
+}
+
+// fetch Instructor courses
+
+export const fetchInstructorsCourses = async (token)=>{
+  let result = [];
+  const toastId = toast.loading("Loading...")
+  try{
+    const response = await apiConnector("GET",  GET_ALL_INSTRUCTOR_COURSES_API, null, {
+      Authorization: `Bearer ${token}`
+    } )
+
+    if (!response?.data?.success) {
+      throw new Error("Could Not fetch Instructor courses")
+    }
+
+    toast.success("fetch Instructor courses")
+    result = response?.data?.data  
+  }catch (error) {
+    console.log("  GET_ALL_INSTRUCTOR_COURSES_API ERROR............", error)
+    toast.error(error.message)
+  }
+  toast.dismiss(toastId);
+  return result;
 }

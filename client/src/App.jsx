@@ -20,6 +20,7 @@ import { ACCOUNT_TYPE } from "./utils/constant";
 import { useSelector } from "react-redux";
 import AddCourses from "./Component/Core/Dashboard/Add course";
 import EditCourse from "./Component/Core/Dashboard/EditCourse/EditCourse";
+import MyCourses from "./Component/Core/Dashboard/MyCourses";
 function App() {
   const { user } = useSelector((state) => state.profile);
   return (
@@ -104,7 +105,7 @@ function App() {
               user?.accountType === ACCOUNT_TYPE.INSTRUCTOR &&(
                <>
                 <Route path="dashboard/add-course" element={<AddCourses/>}/>
-                <Route path="dashboard/my-courses" element={<EditCourse/>}/>
+                <Route path="dashboard/my-courses" element={<MyCourses/>}/>
                </>
               )
             }

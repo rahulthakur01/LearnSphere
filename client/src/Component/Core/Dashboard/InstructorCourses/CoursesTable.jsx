@@ -3,21 +3,37 @@ import { Table, Thead, Tbody, Tr, Th, Td } from "react-super-responsive-table";
 import "react-super-responsive-table/dist/SuperResponsiveTableStyle.css";
 import { LuClock8 } from "react-icons/lu";
 import { FaCheckCircle } from "react-icons/fa";
-
+import { MdEdit } from "react-icons/md";
+import { MdOutlineDeleteForever } from "react-icons/md";
+import ConfirmationModal from "../../../Common/ConfirmationModal";
+import { COURSE_STATUS } from "../../../../utils/constant";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { deleteCourse } from "../../../../Services/oprations/courseAPI";
+import { fetchInstructorsCourses } from "../../../../Services/oprations/courseAPI";
 
-const CourseTable = ({courses, setCourses}) => {
+const CourseTable = ({ courses, setCourses }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { token } = useSelector((state) => state.auth);
   const [confirmationModal, setConfirmationModal] = useState(null);
   const [loading, setLoading] = useState(false);
 
+  const handleCourseDelete = async (courseId) => {
+    setLoading(true);
+    const response = await deleteCourse({ courseId: courseId }, token);
+    const result = await fetchInstructorsCourses(token);
+    if (result) {
+      setCourses(result);
+    }
+    setConfirmationModal(null);
+    setLoading(false)
+  };
+
   return (
     <>
       <div>
-        <Table>
+        <Table className="rounded-xl border border-richblack-800 ">
           <Thead>
             <Tr className="flex gap-x-10 rounded-t-md border-b border-b-richblack-800 px-6 py-2">
               <Th className="flex-1 text-left text-sm font-medium uppercase text-richblack-100">
@@ -43,17 +59,71 @@ const CourseTable = ({courses, setCourses}) => {
               </Tr>
             ) : (
               courses?.map((course) => (
-                <Tr>
-                  <img
-                    src={course?.thumbnail}
-                    alt={course?.courseName}
-                    className="h-[148px] w-[220px] rounded-lg object-cover"
-                  />
+                <Tr
+                  key={course._id}
+                  className="flex gap-x-10  border-b border-richblack-800 px-6 py-8"
+                >
+                  <Td className="flex gap-5">
+                    <img
+                      src={course?.thumbnail}
+                      alt={course?.courseName}
+                      className="h-[148px] w-[220px] rounded-lg object-cover"
+                    />
+                    <div className="text-richblack-5">
+                      <h1>{course?.courseName}</h1>
+                      <p>{course?.courseDescription}</p>
+                      <p>Created At</p>
+                      {course.status === COURSE_STATUS.DRAFT ? (
+                        <p className="flex w-fit flex-row items-center gap-2 rounded-full bg-richblack-700 px-2 py-[2px] text-[12px] font-medium text-pink-100">
+                          <LuClock8 size={14} />
+                          Drafted
+                        </p>
+                      ) : (
+                        <p className="flex w-fit flex-row items-center gap-2 rounded-full bg-richblack-700 px-2 py-[2px] text-[12px] font-medium text-yellow-100">
+                          <div className="flex h-3 w-3 items-center justify-center rounded-full bg-yellow-100 text-richblack-700">
+                            <FaCheckCircle size={8} />
+                          </div>
+                          Published
+                        </p>
+                      )}
+                    </div>
+                  </Td>
+                  <Td className="text-sm font-medium text-richblack-100">
+                    2hr 30min
+                  </Td>
+                  <Td className="text-sm font-medium text-richblack-100">
+                    ₹{course.price}
+                  </Td>
+
+                  <Td className="text-sm font-medium text-richblack-100 ">
+                    <button className="px-2 transition-all duration-200 hover:scale-110 hover:text-caribbeangreen-300">
+                      <MdEdit />
+                    </button>
+                    <button
+                      onClick={() =>
+                        setConfirmationModal({
+                          text1: "Do you want to delete this course?",
+                          text2:
+                            "All the data related to this course will be deleted",
+                          btnText1: !loading ? "Delete" : "loading",
+                          btnText2: "Cancel",
+                          btn1Handler: () => handleCourseDelete(course._id),
+                          btn2Handler: () => setConfirmationModal(null),
+                        })
+                      }
+                      className="px-1 transition-all duration-200 hover:scale-110 hover:text-[#ff0000]"
+                    >
+                      <MdOutlineDeleteForever />
+                    </button>
+                  </Td>
                 </Tr>
               ))
             )}
           </Tbody>
         </Table>
+        {confirmationModal && (
+          <ConfirmationModal modalData={confirmationModal} />
+        )}
       </div>
     </>
   );

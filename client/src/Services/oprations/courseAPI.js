@@ -3,6 +3,7 @@ import { courseDetailsEndpoints } from "../api";
 const {
   CREATE_COURSE_API,
   EDIT_COURSE_API,
+  DELETE_COURSE_API,
   COURSE_CATEGORY_API,
   CREATE_SECTION_API,
   UPDATE_SECTION_API,
@@ -76,6 +77,24 @@ export const editCourseDetails = async (data, token) => {
   toast.dismiss(toastId);
   return result;
 };
+// Delete Course
+export const deleteCourse = async (data, token)=>{
+  const toastId = toast.loading("Loading...");
+  try{
+    const response = await apiConnector("DELETE", DELETE_COURSE_API, data, {
+      Authorization: `Bearer ${token}`
+    })
+    console.log("DELETE COURSE API RESPONSE............", response)
+    if (!response?.data?.success) {
+      throw new Error("Could Not Delete Course")
+    }
+    toast.success("Course Deleted")
+  } catch (error) {
+    console.log("DELETE COURSE API ERROR............", error)
+    toast.error(error.message)
+  }
+  toast.dismiss(toastId)
+}
 // Create Section
 export const createSection = async (data, token) => {
   let result = null;

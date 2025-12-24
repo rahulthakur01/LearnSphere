@@ -254,6 +254,10 @@ exports.getCourseDetails = async (req, res) => {
   }
 };
 
+// Delete Course
+exports.deleteCourse = async(req, res)=>{
+  
+}
 
 // Get a list of courses for a given instructor
 

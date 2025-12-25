@@ -1,5 +1,7 @@
 const Course = require("../models/Course");
 const Category = require("../models/Category");
+const Section = require("../models/Section");
+const SubSection = require("../models/SubSection");
 const User = require("../models/User");
 const { uploadImageToCloudinary } = require("../utils/imageUploader");
 // Function to create a new course
@@ -255,33 +257,76 @@ exports.getCourseDetails = async (req, res) => {
 };
 
 // Delete Course
-exports.deleteCourse = async(req, res)=>{
-  
-}
+exports.deleteCourse = async (req, res) => {
+  try {
+    const { courseId } = req.body;
+
+    const course = await Course.findById(courseId);
+    if (!course) {
+      return res.status(404).json({ message: "Courses are not found" });
+    }
+
+    // remove/unrolled student from enrolled courses
+    const studentsEnroled = course.studentsEnrolled;
+    for (const studentId of studentsEnroled) {
+      await User.findByIdAndUpdate(studentId, {
+        $pull: { courses: courseId },
+      });
+    }
+
+    // Delete section and subSection
+    const courseSections = course.courseContent;
+    for (const sectionId of courseSections) {
+      // Delete sub-sections of the section
+      const section = await Section.findById(sectionId);
+      if (section) {
+        const subSections = section.subSection;
+        for (const subSectionsId of subSections) {
+          await SubSection.findByIdAndDelete(subSectionsId);
+        }
+        // delete section
+        await Section.findByIdAndDelete(sectionId);
+      }
+    }
+
+    // Delete the course
+    await Course.findByIdAndDelete(courseId);
+
+    return res.status(200).json({
+      success: true,
+      message: "Course deleted successfully",
+    });
+  } catch (error) {
+    console.error(error)
+    return res.status(500).json({
+      success: false,
+      message: "Server error",
+      error: error.message,
+    })
+  }
+};
 
 // Get a list of courses for a given instructor
 
-exports.getInstructorCourses = async (req, res)=>{
+exports.getInstructorCourses = async (req, res) => {
+  try {
+    const instructorId = req.user.id;
 
-try{
-  const instructorId = req.user.id
+    const instructorCourses = await Course.find({
+      instructor: instructorId,
+    }).sort({ createdAt: -1 });
 
-  const instructorCourses = await Course.find({
-    instructor: instructorId
-  }).sort({createdAt: -1})
-
-  return res.status(200).json({
-    success: true,
-    message:"Fetched Instructor courses",
-    data: instructorCourses
-  })
-}catch(error){
-  console.log("ERROR..", error)
-  return res.status(500).json({
-    success:false,
-    message: "Failed to retrieve instructor courses",
-    error: error.message
-
-  })
-}
-}
+    return res.status(200).json({
+      success: true,
+      message: "Fetched Instructor courses",
+      data: instructorCourses,
+    });
+  } catch (error) {
+    console.log("ERROR..", error);
+    return res.status(500).json({
+      success: false,
+      message: "Failed to retrieve instructor courses",
+      error: error.message,
+    });
+  }
+};

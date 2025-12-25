@@ -80,6 +80,8 @@ export const editCourseDetails = async (data, token) => {
 // Delete Course
 export const deleteCourse = async (data, token)=>{
   const toastId = toast.loading("Loading...");
+  console.log("DELETE URL =", DELETE_COURSE_API)
+
   try{
     const response = await apiConnector("DELETE", DELETE_COURSE_API, data, {
       Authorization: `Bearer ${token}`

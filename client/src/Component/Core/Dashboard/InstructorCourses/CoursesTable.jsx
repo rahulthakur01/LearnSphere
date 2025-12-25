@@ -11,6 +11,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { deleteCourse } from "../../../../Services/oprations/courseAPI";
 import { fetchInstructorsCourses } from "../../../../Services/oprations/courseAPI";
+import { formatDate } from "../../../../Services/formDate";
 
 const CourseTable = ({ courses, setCourses }) => {
   const dispatch = useDispatch();
@@ -18,10 +19,10 @@ const CourseTable = ({ courses, setCourses }) => {
   const { token } = useSelector((state) => state.auth);
   const [confirmationModal, setConfirmationModal] = useState(null);
   const [loading, setLoading] = useState(false);
-
+  const TRUNCATE_LENGTH = 15;
   const handleCourseDelete = async (courseId) => {
     setLoading(true);
-    const response = await deleteCourse({ courseId: courseId }, token);
+    await deleteCourse({ courseId: courseId }, token);
     const result = await fetchInstructorsCourses(token);
     if (result) {
       setCourses(result);
@@ -61,7 +62,7 @@ const CourseTable = ({ courses, setCourses }) => {
               courses?.map((course) => (
                 <Tr
                   key={course._id}
-                  className="flex gap-x-10  border-b border-richblack-800 px-6 py-8"
+                  className="flex gap-x-10 justify-between border-b border-richblack-800 px-6 py-8"
                 >
                   <Td className="flex gap-5">
                     <img
@@ -69,10 +70,10 @@ const CourseTable = ({ courses, setCourses }) => {
                       alt={course?.courseName}
                       className="h-[148px] w-[220px] rounded-lg object-cover"
                     />
-                    <div className="text-richblack-5">
-                      <h1>{course?.courseName}</h1>
-                      <p>{course?.courseDescription}</p>
-                      <p>Created At</p>
+                    <div className="text-richblack-5 flex flex-col gap-4">
+                      <h1 className="text-lg font-semibold text-richblack-5">{course?.courseName}</h1>
+                      <p className="text-xs text-richblack-300">{course?.courseDescription.split(" ").length > TRUNCATE_LENGTH ? course.courseDescription.split(" ").slice(0, TRUNCATE_LENGTH).join(" ")+"..." : course.courseDescription}</p>
+                      <p className="text-xs text-richblack-300">Created: {formatDate(course?.createdAt)}</p>
                       {course.status === COURSE_STATUS.DRAFT ? (
                         <p className="flex w-fit flex-row items-center gap-2 rounded-full bg-richblack-700 px-2 py-[2px] text-[12px] font-medium text-pink-100">
                           <LuClock8 size={14} />

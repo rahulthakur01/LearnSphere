@@ -8,6 +8,7 @@ const router = express.Router()
 const {
   createCourse,
   editCourse,
+  deleteCourse,
   getAllCourses,
   getCourseDetails,
   getInstructorCourses
@@ -52,6 +53,7 @@ const { auth, isInstructor, isStudent, isAdmin } = require("../middlewares/auth"
 // Courses can Only be Created by Instructors
 router.post("/createCourse", auth, isInstructor, createCourse)
 router.post("/editCourse", auth, isInstructor, editCourse);
+router.delete("/deleteCourse", deleteCourse);
 
 //Add a Section to a Course
 router.post("/addSection", auth, isInstructor, createSection)

@@ -112,7 +112,7 @@ const CourseInfoForm = () => {
         const result = await editCourseDetails(formData, token);
         setLoading(false);
         if (result) {
-          setStep(2);
+          dispatch(setStep(2));
           dispatch(setCourse(result));
         } else {
           toast.error("No changes till now");

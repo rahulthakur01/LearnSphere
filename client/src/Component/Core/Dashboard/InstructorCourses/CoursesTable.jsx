@@ -97,7 +97,8 @@ const CourseTable = ({ courses, setCourses }) => {
                   </Td>
 
                   <Td className="text-sm font-medium text-richblack-100 ">
-                    <button className="px-2 transition-all duration-200 hover:scale-110 hover:text-caribbeangreen-300">
+                    <button onClick={()=> navigate(`/dashboard/edit-course/${course._id}`)}
+                    className="px-2 transition-all duration-200 hover:scale-110 hover:text-caribbeangreen-300">
                       <MdEdit />
                     </button>
                     <button

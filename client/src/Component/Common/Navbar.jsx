@@ -38,8 +38,11 @@ const Navbar = () => {
                             className="absolute left-[50%] top-0
                               translate-x-[80%]
                               translate-y-[-45%] h-6 w-6 rotate-45 rounded bg-richblack-5"
-                          ></div>
+                          >
+                          </div>
+                          hdhdhdhgdh
                         </div>
+                       
                       </div>
                     ) : (
                       <Link to={link?.path}>

@@ -32,7 +32,9 @@ exports.showAllCategories = async (req, res) => {
 		const allCategorys = await Category.find(
 			{},
 			{ name: true, description: true }
-		);
+		)  
+      
+       
 		res.status(200).json({
 			success: true,
 			data: allCategorys,

@@ -1,14 +1,34 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { NavbarLinks } from "../../data/navbar-links";
 import { Link, matchPath, useLocation } from "react-router-dom";
 import { FaChevronDown } from "react-icons/fa";
 import ProfileDropdown from "../Core/HomePage/Auth/ProfileDropdown";
 import { useSelector } from "react-redux";
+import { categories } from "../../Services/api";
+import { apiConnector } from "../../Services/apiConnector";
 
 const Navbar = () => {
   const location = useLocation();
   const { token } = useSelector((state) => state.auth);
-  // const { user } = useSelector((state) => state.profile);
+  const { user } = useSelector((state) => state.profile);
+  const [loading, setLoading] = useState(false);
+  const [subLinks, setSubLinks] = useState([]);
+  console.log("SubLinks...........", subLinks);
+
+  useEffect(() => {
+    fetchCategories();
+  }, []);
+
+  const fetchCategories = async () => {
+    setLoading(true);
+    try {
+      const response = await apiConnector("GET", categories.CATEGORIES_API);
+      setSubLinks(response.data.data);
+    } catch (error) {
+      console.log("COULD NOT FETCH CATEGORY....", error);
+    }
+    setLoading(false);
+  };
 
   function matchRoute(route) {
     return matchPath({ path: route }, location.pathname);
@@ -29,20 +49,33 @@ const Navbar = () => {
                       <div className="flex items-center gap-2 relative group">
                         <p>{link.title}</p>
                         <FaChevronDown />
-                        <div
-                          className="w-[300px] absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[70%]
-                        rounded-md bg-richblack-5 p-4 text-richblack-900 invisible group-hover:visible "
-                        >
+                        <div className="invisible absolute left-[50%] top-[50%] z-[1000] flex w-[200px] translate-x-[-50%] translate-y-[3em] flex-col rounded-lg bg-richblack-5 p-4 text-richblack-900 opacity-0 transition-all duration-150 group-hover:visible group-hover:translate-y-[1.65em] group-hover:opacity-100 lg:w-[300px]">
                           {" "}
                           <div
                             className="absolute left-[50%] top-0
                               translate-x-[80%]
                               translate-y-[-45%] h-6 w-6 rotate-45 rounded bg-richblack-5"
-                          >
-                          </div>
-                          hdhdhdhgdh
+                          ></div>
+                          {loading ? (
+                            <div>Loading....</div>
+                          ) : (
+                            <div>
+                              {subLinks.length ? (
+                                <div>
+                                  {subLinks
+                                    ?.filter(
+                                      (subLink) => subLink?.courses && subLink.courses.length > 0
+                                    )
+                                    .map((subLink, index) => (
+                                      <Link key={index}>{subLink.description}</Link>
+                                    ))}
+                                </div>
+                              ) : (
+                                <p>No Courses found</p>
+                              )}
+                            </div>
+                          )}
                         </div>
-                       
                       </div>
                     ) : (
                       <Link to={link?.path}>
@@ -66,21 +99,19 @@ const Navbar = () => {
           <div className="flex items-center gap-x-4">
             {token == null && (
               <Link to="/signup">
-                <button className="border border-richblack-700 bg-richblack-800 px-[12px] py-[8px] text-richblack-100 rounded-md">Signup</button>
+                <button className="border border-richblack-700 bg-richblack-800 px-[12px] py-[8px] text-richblack-100 rounded-md">
+                  Signup
+                </button>
               </Link>
             )}
-            {
-              token === null &&(
-                <Link to="/login">
-               <button className="border border-richblack-700 bg-richblack-800 px-[12px] py-[8px] text-richblack-100 rounded-md">
-                Login
-               </button>
-                </Link>
-              )
-            }
-            {
-              token !== null && (<ProfileDropdown/>)
-            }
+            {token === null && (
+              <Link to="/login">
+                <button className="border border-richblack-700 bg-richblack-800 px-[12px] py-[8px] text-richblack-100 rounded-md">
+                  Login
+                </button>
+              </Link>
+            )}
+            {token !== null && <ProfileDropdown />}
           </div>
         </div>
       </div>

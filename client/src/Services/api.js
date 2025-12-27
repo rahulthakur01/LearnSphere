@@ -38,3 +38,7 @@ export const courseDetailsEndpoints = {
     GET_ALL_INSTRUCTOR_COURSES_API: BASE_URL + '/course/getInstructorCourses',
     GET_FULL_COURSE_DETAILS_AUTHENTICATED: BASE_URL + '/course/getFullCourseDetails'
 }
+// Category Endpoints
+export const categories = {
+    CATEGORIES_API: BASE_URL + '/course/showAllCategories'
+}

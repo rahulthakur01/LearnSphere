@@ -18,14 +18,17 @@ exports.createCourse = async (req, res) => {
       courseDescription,
       whatYouWillLearn,
       price,
-      tag,
+      tag: _tag,
       category,
       status,
-      instructions,
+      instructions: _instructions,
     } = req.body;
 
     // Get thumbnail image from request files
     const thumbnail = req.files.thumbnailImage;
+    // Convert the tag and instructions from stringified Array to Array
+    const tag = JSON.parse(_tag)
+    const instructions = JSON.parse(_instructions)
 
     // Check if any of the required fields are missing
     if (
@@ -33,9 +36,10 @@ exports.createCourse = async (req, res) => {
       !courseDescription ||
       !whatYouWillLearn ||
       !price ||
-      !tag ||
+      !tag.length ||
       !thumbnail ||
-      !category
+      !category ||
+      !instructions.length
     ) {
       return res.status(400).json({
         success: false,
@@ -102,7 +106,7 @@ exports.createCourse = async (req, res) => {
       { _id: category },
       {
         $push: {
-          course: newCourse._id,
+          courses: newCourse._id,
         },
       },
       { new: true }

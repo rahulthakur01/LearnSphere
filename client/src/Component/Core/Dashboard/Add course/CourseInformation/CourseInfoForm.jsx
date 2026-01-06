@@ -39,8 +39,6 @@ const CourseInfoForm = () => {
       setValue("courseCategory", course.category?._id)
       // setValue("courseRequirements", course.instructions)
       setValue("courseRequirements",  [...course.instructions])
-
-     
       setValue("courseThumbnail", course.thumbnail)
     }
 

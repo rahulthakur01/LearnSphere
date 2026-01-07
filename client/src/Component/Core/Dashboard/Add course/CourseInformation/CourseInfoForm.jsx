@@ -55,7 +55,7 @@ const CourseInfoForm = () => {
       currentValues.courseTags.toString() !== course.tag.toString() ||
       currentValues.courseThumbnail !== course.thumbnail||  
       currentValues.courseBenefits !== course.whatYouWillLearn ||
-      currentValues.courseCategory._id !== course.category._id||
+      currentValues.courseCategory !== course.category._id||
       currentValues.courseRequirements.toString() !== course.instructions.toString()   ) {
       return true;
     } else {
@@ -92,7 +92,7 @@ const CourseInfoForm = () => {
           formData.append("whatYouWillLearn", data.courseBenefits);
         }
 
-        if (currentValues.courseCategory._id !== course.category._id) {
+        if (currentValues.courseCategory !== course.category._id) {
           formData.append("category", data.courseCategory);
         }
 

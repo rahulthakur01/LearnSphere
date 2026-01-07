@@ -27,8 +27,8 @@ exports.createCourse = async (req, res) => {
     // Get thumbnail image from request files
     const thumbnail = req.files.thumbnailImage;
     // Convert the tag and instructions from stringified Array to Array
-    const tag = JSON.parse(_tag)
-    const instructions = JSON.parse(_instructions)
+    const tag = JSON.parse(_tag);
+    const instructions = JSON.parse(_instructions);
 
     // Check if any of the required fields are missing
     if (
@@ -145,6 +145,31 @@ exports.editCourse = async (req, res) => {
         process.env.FOLDER_NAME
       );
       course.thumbnail = thumbnailImage.secure_url;
+    }
+    // extract fields from body
+    const {
+      courseName,
+      courseDescription,
+      price,
+      category,
+      tag,
+      whatYouWillLearn,
+      instructions,
+      status,
+    } = req.body;
+    if (courseName) course.courseName = courseName;
+    if (courseDescription) course.courseDescription = courseDescription;
+    if (price) course.price = price;
+    if (category) course.category = category;
+    if (whatYouWillLearn) course.whatYouWillLearn = whatYouWillLearn;
+    if (status) course.status = status;
+    //  Array fields (JSON string → Array)
+    if (tag) {
+      course.tag = JSON.parse(tag);
+    }
+
+    if (instructions) {
+      course.instructions = JSON.parse(instructions);
     }
 
     for (const key in update) {

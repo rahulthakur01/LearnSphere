@@ -53,7 +53,11 @@ exports.categoryPageDetails = async (req, res) => {
     const { categoryId } = req.body;
     //get courses for specified categoryId
     const selectedCategory = await Category.findById(categoryId)
-      .populate("courses")
+      .populate({
+        path:"courses",
+        match:{status: "Published"},
+        populate:"ratingAndReviews"
+      })
       .exec();
     //validation
     if (!selectedCategory) {
@@ -62,15 +66,32 @@ exports.categoryPageDetails = async (req, res) => {
         message: "Data Not Found",
       });
     }
-    //get coursesfor different categories
-    const differentCategories = await Category.find({
-      _id: { $ne: categoryId },
+
+    // get categories except selectedCategory
+    const categoriesExceptSelected = await Category.find({
+      _id: {$ne: categoryId}
     })
+
+    //get courses for different categories
+    let differentCategories = await Category.findOne(   
+      categoriesExceptSelected[getRandomInt(categoriesExceptSelected.length)]._id
+    )
       .populate("courses")
       .exec();
 
     //get top 10 selling courses
-    //HW - write it on your own
+    const allCategories = await Category.find().populate({
+      path:"courses",
+      match:{status: "Published"},
+      populate:{
+        path:"instructor"
+      }
+    })
+    .exec()
+    const allCourses = allCategories.flatMap((category) => category.courses)
+    const mostSellingCourses = allCourses
+      .sort((a, b) => b.sold - a.sold)
+      .slice(0, 10)
 
     //return response
     return res.status(200).json({
@@ -78,6 +99,7 @@ exports.categoryPageDetails = async (req, res) => {
       data: {
         selectedCategory,
         differentCategories,
+        mostSellingCourses
       },
     });
   } catch (error) {

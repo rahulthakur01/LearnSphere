@@ -21,6 +21,7 @@ import { useSelector } from "react-redux";
 import AddCourses from "./Component/Core/Dashboard/Add course";
 import EditCourse from "./Component/Core/Dashboard/EditCourse/EditCourse";
 import MyCourses from "./Component/Core/Dashboard/MyCourses";
+import Catalog from "./Pages/CatalogPage";
 function App() {
   const { user } = useSelector((state) => state.profile);
   return (
@@ -29,6 +30,7 @@ function App() {
         <Navbar />
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path ="catalog/:catalogName" element = {<Catalog/>}/>
           <Route
             path="signup"
             element={

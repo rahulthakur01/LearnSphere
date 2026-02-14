@@ -4,12 +4,15 @@ import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { categories } from "../Services/api";
 import { getCatalogaPageData } from "../Services/oprations/catalogPageDataAPI";
+import CourseSlider from "../Component/Core/Catalog/CourseSlider";
+import Course_Card from "../Component/Core/Catalog/Course_Card";
 
 const Catalog = () => {
   const { loading } = useSelector((state) => state.profile);
   const { catalogName } = useParams();
   const [catalogPageData, setCatalogPageData] = useState(null);
   const [categoryId, setCategoryId] = useState("");
+  const [active, setActive] = useState(1)
 
   //first fetch categories then call getCatalogPageData
   useEffect(() => {
@@ -42,10 +45,10 @@ const Catalog = () => {
   return (
     <>
       <div className="pt-[80px] bg-richblack-800">
-        <div className="w-full max-w-[1260px] mx-auto px-4 py-10 flex flex-col gap-4">
+        <div className="w-full lg:max-w-[1260px] max-w-[650px] mx-auto px-4 py-10 flex flex-col gap-4">
           {/* Breadcrumb */}
           <p className="text-sm text-richblack-300">
-          {`  Home / Catalog /`}{" "}
+            {`  Home / Catalog /`}{" "}
             <span className="text-yellow-25 font-medium">
               {catalogPageData?.data?.selectedCategory?.name}
             </span>
@@ -63,9 +66,21 @@ const Catalog = () => {
         </div>
       </div>
       {/* section 1 */}
-      <div>
-        section 1
-    </div>
+      <div className="w-full border lg:max-w-[1260px] max-w-[650px] mx-auto my-4">
+        <div>
+          <h1 className='text-2xl font-semibold text-richblack-25'>Courses you get started</h1>
+          <div className="flex items-center gap-4 text-richblack-5 border-b border-b-richblack-600 my-4 text-sm">
+            <p
+             className={`px-4 py-3 cursor-pointer ${ active === 1 ? "border-b border-yellow-25 text-yellow-5": "text-richblack-50"}`}
+             onClick={()=>setActive(1)}
+            >Most Popular</p>
+            <p className={`px-4 py-3 cursor-pointer ${ active === 2 ? "border-b border-yellow-25 text-yellow-5": "text-richblack-50"}`}onClick={()=>setActive(2)}>New</p>
+          </div>
+        </div>
+        <div>
+        <CourseSlider Courses={catalogPageData?.data?.selectedCategory?.courses} />
+        </div>
+      </div>
     </>
   );
 };

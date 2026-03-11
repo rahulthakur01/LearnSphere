@@ -1,9 +1,44 @@
-import React from 'react'
+import React, { useEffect, useState } from "react";
+import GetAvgRating from "../../../utils/aveRating";
+import RatingStars from "../../Common/RatingStars";
 
-const Course_Card = () => {
+const Course_Card = ({ course, Height }) => {
+  const [avgReviewCount, setAvgReviewCount] = useState(0);
+
+  useEffect(() => {
+    const count = GetAvgRating(course?.ratingAndReviews);
+    setAvgReviewCount(count);
+  }, [course]);
+
   return (
-    <>Course_Card</>
-  )
-}
+    <>
+      <div className="text-white">
+        <div>
+          <img
+            src={course?.thumbnail}
+            alt=""
+            className={`${Height} w-full rounded-xl object-cover`}
+          />
+        </div>
+        <div>
+          <p className="text-xl text-richblack-5">{course?.courseName}</p>
+          <p className="text-sm text-richblack-50">
+            {course?.instructor?.firstName} {course?.instructor?.lastName}
+          </p>
+          <div>
+            <div className="flex items-center gap-2">
+              <span className="text-yellow-5">{avgReviewCount || 0}</span>
+              <RatingStars Review_Count={avgReviewCount} />
+              <span className="text-richblack-400">
+                {course?.ratingAndReviews?.length} Ratings
+              </span>
+            </div>
+            <p className="text-xl text-richblack-5">Rs. {course?.price}</p>
+          </div>
+        </div>
+      </div>
+    </>
+  );
+};
 
-export default Course_Card
+export default Course_Card;

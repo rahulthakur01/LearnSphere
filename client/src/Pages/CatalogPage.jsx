@@ -81,6 +81,35 @@ const Catalog = () => {
         <CourseSlider Courses={catalogPageData?.data?.selectedCategory?.courses} />
         </div>
       </div>
+      {/* section 2 */}
+      <div className="w-full border lg:max-w-[1260px] max-w-[650px] mx-auto my-4">
+        <h2 className="text-richblack-25 text-2xl font-semibold">
+          Top Courses in {catalogPageData?.data?.differentCategories?.name}
+        </h2>
+        <div className="py-8">
+              <CourseSlider
+                Courses={catalogPageData?.data?.differentCategories?.courses}
+              />
+            </div>
+      </div>
+
+      {/* section 3 */}
+      <div className="w-full border lg:max-w-[1260px] max-w-[650px] mx-auto my-4">
+        <h2 className="text-richblack-25 text-2xl font-semibold">
+         Frequently bought {catalogPageData?.data?.differentCategory?.name}
+        </h2>
+        <div className="py-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            {
+              catalogPageData?.data?.mostSellingCourses?.slice(0,4).map((course, i)=>(
+                <Course_Card course={course} key={i} Height={"h-[400px]"}/>
+              ))
+            }
+          </div>
+            
+            </div>
+      </div>
+      
     </>
   );
 };

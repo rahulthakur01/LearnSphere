@@ -17,7 +17,7 @@ const CourseSlider = ({Courses})=>{
             <Swiper
             slidesPerView={1}
             spaceBetween={25}
-            // loop={true}
+            loop={true}
             modules={[ Pagination]}
             breakpoints={{
               1024: {

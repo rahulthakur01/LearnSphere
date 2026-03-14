@@ -16,6 +16,13 @@ export const contactUsEndpoints = {
 export const profileEndpoints = {
     GET_USER_ENROLLED_COURSES_API: BASE_URL + '/profile/getEnrolledCourses'
 }
+// Studentendpoints
+export const studentEndpoints = {
+    COURSE_PAYMENT_API: BASE_URL + '/payment/capturePayment',
+    COURSE_VERIFY_API: BASE_URL + '/payment/verifyPayment',
+    SEND_PAYMENT_SUCCESS_EMAIL_API: BASE_URL + "/payment/sendPaymentSuccessEmail",
+
+}
 // Setting Endpoints
 export const settingsEndpoints = {
     UPDATE_DISPLAY_PICTURE_API: BASE_URL + '/profile/updateDisplayPicture',

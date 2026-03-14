@@ -260,7 +260,7 @@ export const fetchInstructorsCourses = async (token)=>{
   return result;
 }
 // Get full course details
-export const getFullCourseDetails = async(courseId, token)=>{
+export const getFullCourseDetails = async(courseId, token)=>{ 
   const toastId = toast.loading("Loading...");
   let result = null
   try{

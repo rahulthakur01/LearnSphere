@@ -9,14 +9,14 @@ export const getUserEnrolledCourses = async (token) => {
   let result = [];
 
   try {
-    const response = await apiConnector("GET", GET_USER_ENROLLED_COURSES_API, {
-      Authorization: ` Bearer ${token}`,
+    const response = await apiConnector("GET", GET_USER_ENROLLED_COURSES_API, null, {
+      Authorization: `Bearer ${token}`,
     });
     console.log("GET_USER_ENROLLED_COURSES_API RESPONSE...", response);
 
-    if (!response.data.message) {
-      throw new Error(response.data.message);
-    }
+    // if (!response.data.message) {
+    //   throw new Error("Could not fetch courses");
+    // }
     result = response.data.data;
     toast.success("All courses fetched")
   } catch (error) {
@@ -24,4 +24,5 @@ export const getUserEnrolledCourses = async (token) => {
     toast.error("Could not found any courses")
   }
   toast.dismiss(toastId);
+  return result;
 };

@@ -1,4 +1,4 @@
-const { instance } = require("../config/razorpay");
+const {instance} = require("../config/razorpay")
 const Course = require("../models/Course");
 const User = require("../models/User");
 const mailSender = require("../utils/mailSender");
@@ -12,10 +12,12 @@ const { default: mongoose } = require("mongoose");
 // capture the payment and initiate the Razorpay order
 exports.capturePayment = async (req, res) => {
   // get courseId and userId
+  console.log("REaqust ki body", req.body)
   const { courses } = req.body;
   const userId = req.user.id;
+  console.log("UserId:", userId);
 
-  if (courses.length === 0) {
+  if (!courses || courses.length === 0) {
     return res.json({
       success: false,
       message: "Please provide courseId",
@@ -25,7 +27,7 @@ exports.capturePayment = async (req, res) => {
   for (const course_id of courses) {
     let course;
     try {
-      course = Course.findById(course_id);
+      course = await Course.findById(course_id);
       if (!course) {
         return res.status(200).json({
           success: false,
@@ -88,7 +90,7 @@ exports.verifyPayment = async (req, res) => {
 
   let body = razorpay_order_id + "|" + razorpay_payment_id;
   const expectedSignature = crypto
-    .createHmac("sha256", process.RAZORPAY_SECRET)
+    .createHmac("sha256", process.env.RAZORPAY_SECRET)
     .update(body.toString())
     .digest("hex");
 

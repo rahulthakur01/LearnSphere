@@ -2,6 +2,7 @@ import { apiConnector } from "../apiConnector";
 import { courseDetailsEndpoints } from "../api";
 const {
   CREATE_COURSE_API,
+  COURSE_DETAILS_API,
   EDIT_COURSE_API,
   DELETE_COURSE_API,
   COURSE_CATEGORY_API,
@@ -15,6 +16,27 @@ const {
   GET_FULL_COURSE_DETAILS_AUTHENTICATED
 } = courseDetailsEndpoints;
 import toast from "react-hot-toast";
+
+// Course details api
+export const fetchCourseDetails = async (courseId,) =>{
+  const toastId = toast.loading("Loading...");
+  let result = null;
+  try{
+    const response = await apiConnector("POST", COURSE_DETAILS_API, {
+      courseId
+    })
+    console.log("COURSE_DETAILS_API RESPONSE.......", response)
+    if(!response.data.success){
+      throw new Error(response.data.message)
+    }
+    result = response.data; 
+  }catch(error){
+    console.log("COURSE_DETAILS_API API ERROR............", error)
+    result = error.response.data
+  }
+  toast.dismiss(toastId);
+  return result;
+} 
 
 export const fetchCourseCategory = async () => {
   let result = [];

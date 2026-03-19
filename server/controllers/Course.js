@@ -261,6 +261,7 @@ exports.getCourseDetails = async (req, res) => {
         path: "courseContent",
         populate: {
           path: "subSection",
+          path: "-videoUrl"
         },
       })
       .exec();

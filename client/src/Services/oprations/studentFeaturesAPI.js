@@ -2,7 +2,8 @@ import toast from "react-hot-toast";
 import { apiConnector } from "../apiConnector";
 import { studentEndpoints } from "../api";
 import {setPaymentLoading} from "../../Redux/slices/courseSlice"
-
+import rzpLogo from "../../assets/Logo/rzp_logo.png"
+import {resetCart} from "../../Redux/slices/cartSlice"
 
 const {COURSE_PAYMENT_API, COURSE_VERIFY_API, SEND_PAYMENT_SUCCESS_EMAIL_API} = studentEndpoints;
 
@@ -21,7 +22,7 @@ const loadScript = (src)=>{
     })
 }
 
-export const buyCourse = async ({token, courses, userDetails, navigate, dispatch})=>{
+export const buyCourse = async (token, courses, userDetails, navigate, dispatch)=>{
     const toastId = toast.loading("loading...")
 
     try{
@@ -43,11 +44,11 @@ export const buyCourse = async ({token, courses, userDetails, navigate, dispatch
         console.log("PRINTING ORDERRESPONSE.........", orderResponse);
 
         const options ={
-            key: process.env.RAZORPAY_API,
+            key: import.meta.env.VITE_RAZORPAY_KEY,
             currency: orderResponse.data.currency,
             amount:`${ orderResponse.data.amount}`,
             order_id:orderResponse.data.message.id,
-            name:"StudyNotion",
+            name:"LearnSphere",
             description: "Thank You for Purchasing the Course",
             image:rzpLogo,
             prefill:{
@@ -59,6 +60,13 @@ export const buyCourse = async ({token, courses, userDetails, navigate, dispatch
                 verifyPayment({...response, courses}, token, navigate, dispatch);
             }
         }
+
+        const paymentObject = new window.Razorpay(options)
+        paymentObject.open();
+        paymentObject.on("Payment failed", function(response){
+            toast.error("oops, payment failed");
+            console.log(response.error)
+        })
     
     }  catch(error) {
         console.log("PAYMENT API ERROR.....", error);
@@ -87,7 +95,7 @@ const sendPaymentSuccessEmail = async({response, amount, token}) =>{
 
 }
 
-const verifyPayment = async({bodyData, token, navigate, dispatch})=>{
+const verifyPayment = async(bodyData, token, navigate, dispatch)=>{
     const toastId = toast.loading("Verifying payment...");
     dispatch(setPaymentLoading(true))
 

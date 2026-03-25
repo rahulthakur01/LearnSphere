@@ -6,11 +6,14 @@ import ProfileDropdown from "../Core/HomePage/Auth/ProfileDropdown";
 import { useSelector } from "react-redux";
 import { categories } from "../../Services/api";
 import { apiConnector } from "../../Services/apiConnector";
+import { ACCOUNT_TYPE } from "../../utils/constant";
+import { TiShoppingCart } from "react-icons/ti";
 
 const Navbar = () => {
   const location = useLocation();
   const { token } = useSelector((state) => state.auth);
   const { user } = useSelector((state) => state.profile);
+  const {totalItems} = useSelector((state)=>state.cart)
   const [loading, setLoading] = useState(false);
   const [subLinks, setSubLinks] = useState([]);
   console.log("SubLinks...........", subLinks);
@@ -75,7 +78,7 @@ const Navbar = () => {
                                         className="rounded-lg bg-transparent py-1 pl-4 hover:bg-richblack-50 flex flex-col "
                                         key={i}
                                       >
-                                         <p className="my-3">{subLink.name}</p>
+                                        <p className="my-3">{subLink.name}</p>
                                       </Link>
                                     ))}
                                 </>
@@ -106,6 +109,16 @@ const Navbar = () => {
           </nav>
 
           <div className="flex items-center gap-x-4">
+            {user && user?.accountType !== ACCOUNT_TYPE.INSTRUCTOR && (
+              <Link to='/dashboard/cart'>
+              {  totalItems > 0 && (
+                  <span>
+                  <TiShoppingCart className="text-2xl text-richblack-100" />
+                </span>
+                )
+             }
+              </Link>
+            )}
             {token == null && (
               <Link to="/signup">
                 <button className="border border-richblack-700 bg-richblack-800 px-[12px] py-[8px] text-richblack-100 rounded-md">

@@ -248,7 +248,7 @@ exports.getCourseDetails = async (req, res) => {
     //get id
     const { courseId } = req.body;
     //find course details
-    const courseDetails = await Course.find({ _id: courseId })
+    const courseDetails = await Course.findOne({ _id: courseId })
       .populate({
         path: "instructor",
         populate: {
@@ -256,12 +256,12 @@ exports.getCourseDetails = async (req, res) => {
         },
       })
       .populate("category")
-      //.populate("ratingAndreviews")
+      .populate("ratingAndReviews")
       .populate({
         path: "courseContent",
         populate: {
           path: "subSection",
-          path: "-videoUrl"
+          select: "-videoUrl"
         },
       })
       .exec();

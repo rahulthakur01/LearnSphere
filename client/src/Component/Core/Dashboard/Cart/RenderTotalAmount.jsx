@@ -8,9 +8,9 @@ const RenderTotalAmount = () => {
   }
   return (
     <>
-    <div>
-      <h1>Total</h1>
-      <p>Rs {total}</p>
+    <div className=''>
+      <h1 className='text-richblack-400'>Total</h1>
+      <p className='text-yellow-100 font-semibold text-xl'>Rs {total}</p>
 
       <IconBtn text="Buy now" onclick={handleBuyCourse} customClasses={"w-full justify-center"}/>
     </div>

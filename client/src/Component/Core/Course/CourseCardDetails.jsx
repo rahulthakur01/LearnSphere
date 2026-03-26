@@ -14,10 +14,12 @@ const CourseCardDetails = ({course, setConfirmationModal, handleBuyCourse,}) => 
   const handleAddToCart =()=>{
     if(user && user?.accountType === ACCOUNT_TYPE.INSTRUCTOR){
       toast.error("You're instructor, you can't buy this course")
+      return
     }
 
       if(token){
         dispatch(addToCart(course))
+        return
       }
     setConfirmationModal({
       text1:"You're not logged in",

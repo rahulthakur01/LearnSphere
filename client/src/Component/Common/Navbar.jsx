@@ -108,12 +108,13 @@ const Navbar = () => {
             </ul>
           </nav>
 
-          <div className="flex items-center gap-x-4">
+          <div className="flex items-center gap-x-4 relative">
             {user && user?.accountType !== ACCOUNT_TYPE.INSTRUCTOR && (
-              <Link to='/dashboard/cart'>
+              <Link to='/dashboard/cart' className="relative">
+                 <TiShoppingCart className="text-2xl text-richblack-100 " />
               {  totalItems > 0 && (
-                  <span>
-                  <TiShoppingCart className="text-2xl text-richblack-100" />
+                  <span className="absolute -bottom-2 -top-2 -right-2 grid h-5 w-5 place-items-center overflow-hidden rounded-full bg-richblack-600 text-center text-xs font-bold text-yellow-100">
+                    {totalItems}
                 </span>
                 )
              }

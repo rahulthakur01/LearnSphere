@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import ReactStars from "react-rating-stars-component";
 import { GiNinjaStar } from "react-icons/gi";
 import { RiDeleteBin6Line } from "react-icons/ri";
+import { removeCart } from "../../../../Redux/slices/cartSlice";
 
 const RenderCartCourses = () => {
   const { cart } = useSelector((state) => state.cart);
@@ -46,7 +47,8 @@ const RenderCartCourses = () => {
           </div>
 
           <div className="flex flex-col items-end gap-2 space-y-2">
-            <button className="flex items-center gap-1 text-red-500 rounded-md border border-richblack-600 py-2 px-[12px] bg-richblack-600 gap-x-1">
+            <button onClick={()=>dispatch(removeCart(course))}
+            className="flex items-center gap-1 text-red-500 rounded-md border border-richblack-600 py-2 px-[12px] bg-richblack-600 gap-x-1">
               <RiDeleteBin6Line />
               <span>remove</span>
             </button>

@@ -9,7 +9,7 @@ const VerifyEmail = () => {
   const navigate = useNavigate();
   const { signUpData, loading } = useSelector((state) => state.auth);
 
-  const OTP_LEN = 6;
+  const OTP_LEN =6;
   const [otp, setOtp] = useState(new Array(OTP_LEN).fill(""));
   const inputRef = useRef([]);
 

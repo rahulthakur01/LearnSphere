@@ -32,11 +32,26 @@ const CourseDetails = () => {
     };
     getCourseFullDetails();
   }, [courseId]);
-
+  // Average
   const [avgRatingCount, setAvgRatingCount] = useState(0);
   useEffect(() => {
     const countAvg = GetAvgRating(courseData?.data?.ratingAndReviews);
     setAvgRatingCount(countAvg);
+  }, [courseData]);
+
+  const[isActive, setIsActive] = useState(Array(0))
+  const handleActive = () =>{
+
+  }
+
+  //lectures
+  const [totalNumberOfLecture, setTotalNumberOfLecture] = useState(0);
+  useEffect(() => {
+    let lectures = 0;
+    courseData?.data?.courseContent?.forEach((sec) => {
+      lectures += sec?.subSection?.length;
+    });
+    setTotalNumberOfLecture(lectures);
   }, [courseData]);
 
   const handleBuyCourse = () => {
@@ -102,28 +117,53 @@ const CourseDetails = () => {
             </div>
           </div>
         </div>
-
+        {/* course Content */}
         <div className=" w-11/12 max-w-[1260px] items-center  mx-auto text-white  py-[50px]">
           <div className=" w-[60%]">
+
             <div className="flex flex-col gap-2 w-full max-w-3xl border border-richblack-700 rounded-lg p-6 bg-richblack-900 ">
               <h2 className="text-xl font-semibold">What you will learn</h2>
               <p>{whatYouWillLearn}</p>
             </div>
 
-            <div className="my-4">
+            <div className="my-4 border">
               <h2 className="text-2xl font-semibold">Course Content</h2>
               <div className="flex justify-between py-2">
                 <div className="flex gap-2 items-center">
-                  <span>sections</span>
-                  <span>lectures</span>
+                  <span>
+                    {courseData.courseContent}
+                    {`section (s)`}
+                  </span>
+                  <span>
+                    {" "}
+                    {totalNumberOfLecture} {`lecture (s)`}
+                  </span>
                   <span>10 total length</span>
                 </div>
-
                 <div>
-                  <p className="text-yellow-200">Collaps of sections</p>
+                  <button onClick={ ()=>handleActive([])} className="text-yellow-200">Collaps of sections</button>
                 </div>
               </div>
             </div>
+            {/* Course Details Accordian */}
+            <div>
+
+            <div>
+              {
+                courseContent.map((course, index)=>{
+                  <CourseAccordianBar
+                  course={course}
+                  key={index}
+                  isActive={isActive}
+                  handleActive={handleActive}
+                  
+                  />
+                })
+              }
+            </div>
+              
+            </div>
+
           </div>
         </div>
       </div>

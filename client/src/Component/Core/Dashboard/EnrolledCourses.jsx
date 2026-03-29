@@ -34,9 +34,9 @@ const EnrolledCourses = () => {
           ) : (
             <div className="my-8 text-richblack-5">
               <div className="flex rounded-t-lg bg-richblack-500"> 
-              <p className="w-[45%] px-5 py-3">Course Name</p>
-              <p className="w-1/4 px-2 py-3">Duration</p>
-              <p className="flex-1 px-2 py-3">Progress</p>
+                <p className="w-[45%] px-5 py-3">Course Name</p>
+                <p className="w-1/4 px-2 py-3">Duration</p>
+                <p className="flex-1 px-2 py-3">Progress</p>
 
               </div>
               {enrolledCourse.map((course, i) => (
@@ -45,7 +45,7 @@ const EnrolledCourses = () => {
                     <img src={course.thumbnail} className="w-20 h-20 rounded-lg object-cover"/>
                     <div>
                       <p className="font-semibold">{course.courseName}</p>
-                      <p className="text-md text-richblack-300">{course.courseDescription}</p>
+                      <p className="text-md text-richblack-300">{course.courseDescription.length > 50 ? `${course.courseDescription.slice(0,50)}`: course.courseDescription}</p>
                     </div>
                   </div>
 

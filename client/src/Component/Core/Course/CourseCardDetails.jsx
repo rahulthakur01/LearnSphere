@@ -77,7 +77,7 @@ const CourseCardDetails = ({course, setConfirmationModal, handleBuyCourse,}) => 
             <div className="">
               {course?.instructions?.map((item, i) => (
                 <p key={i}>
-                  <span>{item}</span>
+                  <span className="text-sm text-richblack-100">{item}</span>
                 </p>
               ))}
             </div>

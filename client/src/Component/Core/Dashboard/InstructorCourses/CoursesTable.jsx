@@ -19,7 +19,7 @@ const CourseTable = ({ courses, setCourses }) => {
   const { token } = useSelector((state) => state.auth);
   const [confirmationModal, setConfirmationModal] = useState(null);
   const [loading, setLoading] = useState(false);
-  const TRUNCATE_LENGTH = 15;
+  const TRUNCATE_LENGTH = 30;
   const handleCourseDelete = async (courseId) => {
     setLoading(true);
     await deleteCourse({ courseId: courseId }, token);

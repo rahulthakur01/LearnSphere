@@ -6,7 +6,8 @@ import { fetchCourseDetails } from "../Services/oprations/courseAPI";
 import GetAvgRating from "../utils/aveRating";
 import RatingStars from "../Component/Common/RatingStars";
 import { formatDate } from "../Services/formDate";
-import CourseCardDetails from "../Component/Core/Course/CourseCardDetails";
+import CourseAccordianBar from "../Component/Core/Course/CourseAccordianBar";
+import CourseCardDetails from "../Component/Core/Course/CourseCardDetails"
 
 const CourseDetails = () => {
   const { user } = useSelector((state) => state.profile);
@@ -39,10 +40,14 @@ const CourseDetails = () => {
     setAvgRatingCount(countAvg);
   }, [courseData]);
 
-  const[isActive, setIsActive] = useState(Array(0))
-  const handleActive = () =>{
-
-  }
+  const [isActive, setIsActive] = useState(Array(0));
+  const handleActive = (id) => {
+    setIsActive(
+      !isActive.includes(id)
+        ? isActive.concat([id])
+        : isActive.filter((e) => e !== id)
+    );
+  };
 
   //lectures
   const [totalNumberOfLecture, setTotalNumberOfLecture] = useState(0);
@@ -75,6 +80,7 @@ const CourseDetails = () => {
 
   const {
     courseName,
+    courseContent,
     courseDescription,
     price,
     ratingAndReviews,
@@ -120,18 +126,17 @@ const CourseDetails = () => {
         {/* course Content */}
         <div className=" w-11/12 max-w-[1260px] items-center  mx-auto text-white  py-[50px]">
           <div className=" w-[60%]">
-
-            <div className="flex flex-col gap-2 w-full max-w-3xl border border-richblack-700 rounded-lg p-6 bg-richblack-900 ">
+            <div className="flex flex-col gap-2 w-full max-w-3xl  border-richblack-700 rounded-lg p-6 bg-richblack-900 ">
               <h2 className="text-xl font-semibold">What you will learn</h2>
               <p>{whatYouWillLearn}</p>
             </div>
 
-            <div className="my-4 border">
+            <div className="my-4 px-6">
               <h2 className="text-2xl font-semibold">Course Content</h2>
               <div className="flex justify-between py-2">
                 <div className="flex gap-2 items-center">
                   <span>
-                    {courseData.courseContent}
+                    {courseContent.length}{" "}
                     {`section (s)`}
                   </span>
                   <span>
@@ -141,29 +146,28 @@ const CourseDetails = () => {
                   <span>10 total length</span>
                 </div>
                 <div>
-                  <button onClick={ ()=>handleActive([])} className="text-yellow-200">Collaps of sections</button>
+                  <button
+                    onClick={() => handleActive([])}
+                    className="text-yellow-200"
+                  >
+                    Collaps of sections
+                  </button>
                 </div>
               </div>
             </div>
             {/* Course Details Accordian */}
             <div>
-
-            <div>
-              {
-                courseContent.map((course, index)=>{
+              <div className="">
+                {courseContent?.map((course, index) => (
                   <CourseAccordianBar
-                  course={course}
-                  key={index}
-                  isActive={isActive}
-                  handleActive={handleActive}
-                  
+                    course={course}
+                    key={index}
+                    isActive={isActive}
+                    handleActive={handleActive}
                   />
-                })
-              }
+                ) )}
+              </div>
             </div>
-              
-            </div>
-
           </div>
         </div>
       </div>

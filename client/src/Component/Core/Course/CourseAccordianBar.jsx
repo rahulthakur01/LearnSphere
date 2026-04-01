@@ -6,9 +6,9 @@ const CourseAccordianBar = ({ course, isActive, handleActive }) => {
   const contentElement = useRef(null);
 
   const [active, setActive] = useState(false);
-  useEffect(()=>{
-    setActive(isActive.includes(course._id))
-  },[isActive])
+  useEffect(() => {
+    setActive(isActive.includes(course._id));
+  }, [isActive]);
 
   const [sectionHeight, setSectionHeight] = useState(0);
   useEffect(() => {
@@ -19,9 +19,18 @@ const CourseAccordianBar = ({ course, isActive, handleActive }) => {
     <>
       <div className="border border-richblack-700 bg-richblack-700 text-white">
         <div>
-          <div className="flex justify-between bg-opacity-20 px-7  py-6 cursor-pointer transition-[0.3s]" onClick={()=>handleActive(course._id)}>
+          <div
+            className="flex justify-between bg-opacity-20 px-7  py-6 cursor-pointer transition-[0.3s]"
+            onClick={() => handleActive(course._id)}
+          >
             <div className="flex items-center gap-2">
-              <i>
+              <i
+                className={
+                  isActive.includes(course._id)
+                    ? "rotate-180 transition-[0.3s]"
+                    : "rotate-0 transition-[0.3s]"
+                }
+              >
                 <FaChevronDown />
               </i>
               <p>{course?.sectionName}</p>
@@ -44,6 +53,7 @@ const CourseAccordianBar = ({ course, isActive, handleActive }) => {
               <CourseSubSectionAccordian subSec={subSec} key={i} />
             ))}
           </div>
+          
         </div>
       </div>
     </>

@@ -7,7 +7,10 @@ import GetAvgRating from "../utils/aveRating";
 import RatingStars from "../Component/Common/RatingStars";
 import { formatDate } from "../Services/formDate";
 import CourseAccordianBar from "../Component/Core/Course/CourseAccordianBar";
-import CourseCardDetails from "../Component/Core/Course/CourseCardDetails"
+import CourseCardDetails from "../Component/Core/Course/CourseCardDetails";
+import ReactMarkdown from "react-markdown";
+import Footer from "../Component/Common/Footer";
+import ConfirmationModal from "../Component/Common/ConfirmationModal"
 
 const CourseDetails = () => {
   const { user } = useSelector((state) => state.profile);
@@ -128,7 +131,7 @@ const CourseDetails = () => {
           <div className=" w-[60%]">
             <div className="flex flex-col gap-2 w-full max-w-3xl  border-richblack-700 rounded-lg p-6 bg-richblack-900 ">
               <h2 className="text-xl font-semibold">What you will learn</h2>
-              <p>{whatYouWillLearn}</p>
+              <ReactMarkdown>{whatYouWillLearn}</ReactMarkdown>
             </div>
 
             <div className="my-4 px-6">
@@ -136,8 +139,7 @@ const CourseDetails = () => {
               <div className="flex justify-between py-2">
                 <div className="flex gap-2 items-center">
                   <span>
-                    {courseContent.length}{" "}
-                    {`section (s)`}
+                    {courseContent.length} {`section (s)`}
                   </span>
                   <span>
                     {" "}
@@ -165,12 +167,36 @@ const CourseDetails = () => {
                     isActive={isActive}
                     handleActive={handleActive}
                   />
-                ) )}
+                ))}
               </div>
             </div>
+
+            <div className="mb-12 py-4">
+              <p className="text-[28px] font-semibold">Author</p>
+              <div className="flex items-center gap-4 py-4">
+                <img
+                  src={
+                    instructor.image
+                      ? instructor.image
+                      : `https://api.dicebear.com/5.x/initials/svg?seed=${instructor.firstName} ${instructor.lastName}`
+                  }
+                  alt="author"
+                  className="h-14 w-14 rounded-full object-cover"
+                />
+                <p>{`${instructor.firstName} ${instructor.lastName}`}</p>
+              </div>
+               <p className="text-richblack-50">
+                {instructor?.additionalDetails?.about}
+              </p>
+            </div>
+
           </div>
         </div>
       </div>
+   <Footer/>
+   {
+    confirmationModal && <ConfirmationModal modalData={confirmationModal}/>
+   }
     </>
   );
 };

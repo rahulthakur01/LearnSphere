@@ -2,17 +2,19 @@ import { useEffect, useState } from "react";
 import { getUserEnrolledCourses } from "../../../Services/oprations/profileAPI";
 import  ProgressBar from "@ramonak/react-progress-bar"
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const EnrolledCourses = () => {
   const { token } = useSelector((state) => state.auth);
   const [enrolledCourse, setEnrolledCourse] = useState(null);
-  // console.log("EnrolledCourse data", enrolledCourse)
+  const navigate = useNavigate()
 
   const getEnrolledCourse = async ()=>{
     try{
         const response = await getUserEnrolledCourses(token);
         setEnrolledCourse(response)
-        // console.log("EnrolledCourse response", response)
+        console.log("EnrolledCourse data", response)
+
     }catch(error){
         console.log("Error in enrolled courses...", error);
         console.log("Unable to Fetch Enrolled Courses");
@@ -41,7 +43,9 @@ const EnrolledCourses = () => {
               </div>
               {enrolledCourse.map((course, i) => (
                 <div key={i} className="flex items-center  border-richblack-700">
-                  <div className="flex gap-2 my-4">
+                  <div className="flex gap-2 my-4" onClick={()=>{
+                    navigate(`/view-courses/${course._id}/section/${course.courseContent?.[0]._id}/sub-section/${course.courseContent?.[0]?.subSection?.[0]?._id}`)
+                  }}>
                     <img src={course.thumbnail} className="w-20 h-20 rounded-lg object-cover"/>
                     <div>
                       <p className="font-semibold">{course.courseName}</p>

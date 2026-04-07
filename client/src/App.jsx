@@ -22,8 +22,9 @@ import AddCourses from "./Component/Core/Dashboard/Add course";
 import EditCourse from "./Component/Core/Dashboard/EditCourse/EditCourse";
 import MyCourses from "./Component/Core/Dashboard/MyCourses";
 import Catalog from "./Pages/CatalogPage";
-import Error from "./Pages/Error"
+import Error from "./Pages/Error";
 import CourseDetails from "./Pages/CourseDetails";
+import ViewCourse from "./Pages/ViewCourse";
 function App() {
   const { user } = useSelector((state) => state.profile);
   return (
@@ -32,8 +33,8 @@ function App() {
         <Navbar />
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path ="catalog/:catalogName" element = {<Catalog/>}/>
-          <Route path="/course/:courseId" element={<CourseDetails/>}/>
+          <Route path="catalog/:catalogName" element={<Catalog />} />
+          <Route path="/course/:courseId" element={<CourseDetails />} />
           <Route
             path="signup"
             element={
@@ -105,21 +106,27 @@ function App() {
               </>
             )}
 
-
-            {
-              user?.accountType === ACCOUNT_TYPE.INSTRUCTOR &&(
-               <>
-                <Route path="dashboard/add-course" element={<AddCourses/>}/>
-                <Route path="dashboard/my-courses" element={<MyCourses/>}/>
-                <Route path="dashboard/edit-course/:courseId" element={<EditCourse/>}/>
-
-               </>
-              )
-            }
+            {user?.accountType === ACCOUNT_TYPE.INSTRUCTOR && (
+              <>
+                <Route path="dashboard/add-course" element={<AddCourses />} />
+                <Route path="dashboard/my-courses" element={<MyCourses />} />
+                <Route
+                  path="dashboard/edit-course/:courseId"
+                  element={<EditCourse />}
+                />
+              </>
+            )}
           </Route>
 
-          <Route path="*" element={<Error />} />
+          <Route
+            element={
+              <PrivateRoute>
+                <ViewCourse />
+              </PrivateRoute>
+            }
+          ></Route>
 
+          <Route path="*" element={<Error />} />
         </Routes>
       </div>
     </>

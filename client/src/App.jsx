@@ -25,6 +25,7 @@ import Catalog from "./Pages/CatalogPage";
 import Error from "./Pages/Error";
 import CourseDetails from "./Pages/CourseDetails";
 import ViewCourse from "./Pages/ViewCourse";
+import VideoDetails from "./Component/ViewCourse/VideoDetails";
 function App() {
   const { user } = useSelector((state) => state.profile);
   return (
@@ -117,14 +118,34 @@ function App() {
               </>
             )}
           </Route>
-
+          {/* 
           <Route
             element={
               <PrivateRoute>
                 <ViewCourse />
               </PrivateRoute>
             }
-          ></Route>
+          >
+            {user?.accountType === ACCOUNT_TYPE.STUDENT && (
+              <>
+              <Route path='view-course/:courseId/section/:sectionId/sub-section/:subSectionId' element={<VideoDetails/>} />
+              </>
+            )}
+
+          </Route> */}
+          <Route
+            path="view-courses/:courseId"
+            element={
+              <PrivateRoute>
+                <ViewCourse />
+              </PrivateRoute>
+            }
+          >
+            <Route
+              path="section/:sectionId/sub-section/:subSectionId"
+              element={<VideoDetails />}
+            />
+          </Route>
 
           <Route path="*" element={<Error />} />
         </Routes>

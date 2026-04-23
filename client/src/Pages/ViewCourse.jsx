@@ -43,7 +43,7 @@ const ViewCourse = () => {
         </div>
         {/* content */}
         <div className="border border-red-600 w-[80%]">
-          <div className="text-richblack-50 py-10 mx-auto ">
+          <div className="text-richblack-50 py-4 mx-auto ">
             <Outlet />
           </div>
         </div>

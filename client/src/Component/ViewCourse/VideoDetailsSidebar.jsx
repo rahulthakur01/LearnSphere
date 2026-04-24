@@ -3,7 +3,7 @@ import IconBtn from "../Common/IconBtn";
 import { useParams, useLocation, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 
-const VideoDetailsSidebar = () => {
+const VideoDetailsSidebar = ({setReviewModal}) => {
   const [activeStatus, setActiveStatus] = useState("");
   const [videoBarActive, setVideoBarActive] = useState("");
   const { sectionId, subSectionId } = useParams();
@@ -43,7 +43,7 @@ const VideoDetailsSidebar = () => {
           <div className="flex justify-between p-4">
             <div>back</div>
             <div>
-              <IconBtn text="Add Review" />
+              <IconBtn text="Add Review" onclick={()=>setReviewModal(true)} />
             </div>
           </div>
           {/* for heading */}

@@ -38,11 +38,11 @@ const ViewCourse = () => {
     <>
       <main className="text-white flex pt-18 min-h-[calc(100vh-1.5rem)] overflow-hidden ">
         {/* Video sidebar */}
-        <div className="sticky top-[80px] w-[20%] border">
+        <div className="sticky top-[80px] w-[20%] ">
           <VideoDetailsSidebar setReviewModal={setReviewModal} />
         </div>
         {/* content */}
-        <div className="border border-red-600 w-[80%]">
+        <div className=" w-[80%]">
           <div className="text-richblack-50 py-4 mx-auto ">
             <Outlet />
           </div>

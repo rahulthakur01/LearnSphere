@@ -2,6 +2,8 @@ import React, { useRef, useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import IconBtn from "../Common/IconBtn";
+import { markLectureAsComplete } from "../../Services/oprations/courseAPI";
+import { updateCompletedLectures } from "../../Redux/slices/viewCourseSlice";
 
 const VideoDetails = () => {
   const dispatch = useDispatch();
@@ -115,7 +117,17 @@ const VideoDetails = () => {
   };
 
   // handle complete lecture
-  const handleVideoLectureCompletion = () => {};
+  const handleVideoLectureCompletion = async () => {
+    setLoading(true);
+    const res = await markLectureAsComplete(
+      { courseId: courseId, subSectionId: subSectionId },
+      token
+    );
+    if (res) {
+      dispatch(updateCompletedLectures(subSectionId));
+    }
+    setLoading(false);
+  };
 
   if (videoData === null) {
     return (
@@ -164,7 +176,8 @@ const VideoDetails = () => {
             disabled={loading}
             onclick={() => {
               if (videoRef.current) {
-                videoRef.current?.seek(0);
+                videoRef.current.currentTime = 0;
+                videoRef.current.play()
                 setVideoEnded(false);
               }
             }}

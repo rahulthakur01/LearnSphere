@@ -44,6 +44,8 @@ const {
   getAllRating,
 } = require("../controllers/RatingAndReview")
 
+const {updateCourseProgress} = require("../controllers/courseProgress")
+
 // Importing Middlewares
 const { auth, isInstructor, isStudent, isAdmin } = require("../middlewares/auth")
 
@@ -75,6 +77,9 @@ router.post("/getCourseDetails", getCourseDetails)
 // Get Full course Details for Specific course
 router.post("/getFullCourseDetails", auth, getFullCourseDetails)
 router.get("/getInstructorCourses", auth, isInstructor, getInstructorCourses)
+// Get full rating
+router.post("/updateCourseProgress", auth, isStudent, updateCourseProgress);
+
 
 
 // ********************************************************************************************************

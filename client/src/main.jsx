@@ -7,6 +7,8 @@ import { configureStore } from "@reduxjs/toolkit";
 import { Provider } from "react-redux";
 import rootReducer from "./Redux/reducers/reducers";
 import { Toaster } from "react-hot-toast";
+import '@smastrom/react-rating/style.css'
+
 const store = configureStore({
   reducer: rootReducer
 });

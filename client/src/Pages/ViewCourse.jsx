@@ -29,7 +29,6 @@ const ViewCourse = () => {
         (sec) => (lectures += sec.subSection.length)
       );
       dispatch(setTotalNoOfLectures(lectures));
-      console.log("Viewcourse courseData............", courseData);
     };
     setCourseSpecificDetails();
   }, []);

@@ -16,7 +16,6 @@ const Navbar = () => {
   const {totalItems} = useSelector((state)=>state.cart)
   const [loading, setLoading] = useState(false);
   const [subLinks, setSubLinks] = useState([]);
-  console.log("SubLinks...........", subLinks);
 
   useEffect(() => {
     fetchCategories();

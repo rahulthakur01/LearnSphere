@@ -16,6 +16,8 @@ const VideoDetailsSidebar = ({setReviewModal}) => {
     totalNoOfLectures,
   } = useSelector((state) => state.viewCourse);
 
+  console.log("Sidebar rendering, courseSectionData:", courseSectionData);
+
   useEffect(() => {
     const setActiveFlags = () => {
       if (!courseSectionData.length) return;
@@ -69,7 +71,7 @@ const VideoDetailsSidebar = ({setReviewModal}) => {
               <div>
                 {activeStatus === course?._id && (
                   <div>
-                    {course?.subSection.map((topic, index) => (
+                    {course.subSection.map((topic, index) => (
                       <div
                         className={`flex gap-5 p-2 ${
                           videoBarActive === topic?._id
@@ -77,6 +79,12 @@ const VideoDetailsSidebar = ({setReviewModal}) => {
                             : "bg-richblack-900 text-white"
                         }`}
                         key={index}
+                        onClick={(e)=>{
+                          e.stopPropagation()
+                          navigate(`/view-course/${courseEntireData?._id}/section/${course?._id}/sub-section/${topic?._id}`)
+                          setVideoBarActive(topic?._id)
+                        }}
+                       
                       >
                         <input type="checkbox" checked={completedLectures?.includes(topic?._id)} onChange={()=>{}}/>
                         <span className="text-sm ">{topic.title}</span>
